@@ -118,7 +118,7 @@ sgccak <-  function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = F
   if(iter<1000 & verbose) cat("The SGCCA algorithm converged to a stationary point after", iter-1, "iterations \n") 
   if (verbose) plot(crit, xlab = "iteration", ylab = "criteria")
   
-  for (q in 1:J) if(sum(a[[q]]!=0) <= 1) warning(sprintf("Deflation failed because only one variable was selected for block #",q))
+  for (q in 1:J) if(sum(a[[q]]!=0) <= 1) warning("Deflation failed because only one variable was selected for block #",q)
   
   AVE_inner  <- sum(C*cor(Y)^2/2)/(sum(C)/2) # AVE inner model
   
