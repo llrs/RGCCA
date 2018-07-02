@@ -13,9 +13,9 @@ sgcca(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = rep(1,
 
 \item{C}{A design matrix that describes the relationships between blocks (default: complete design).}
 
-\item{c1}{Either a \eqn{1*J} vector or a \eqn{max(ncomp) * J} matrix encoding the L1 constraints applied to the outer weight vectors. 
-Elements of c1 vary between \eqn{1/sqrt(p_j)} and 1 (larger values of c1 correspond to less penalization). 
-If c1 is a vector, L1-penalties are the same for all the weights corresponding to the same block but different components: 
+\item{c1}{Either a \eqn{1*J} vector or a \eqn{max(ncomp) * J} matrix encoding the L1 constraints applied to the outer weight vectors.
+Elements of c1 vary between \eqn{1/sqrt(p_j)} and 1 (larger values of c1 correspond to less penalization).
+If c1 is a vector, L1-penalties are the same for all the weights corresponding to the same block but different components:
 \deqn{for all h, |a_{j,h}|_{L_1} \le c_1[j] \sqrt{p_j},}
 with \eqn{p_j} the number of variables of \eqn{X_j}.
 If c1 is a matrix, each row \eqn{h} defines the constraints applied to the weights corresponding to components \eqn{h}:
@@ -55,24 +55,24 @@ If c1 is a matrix, each row \eqn{h} defines the constraints applied to the weigh
 \item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE): AVE(for one block), AVE(outer model), AVE(inner model).}
 }
 \description{
-SGCCA extends RGCCA to address the issue of variable selection. Specifically, 
-RGCCA is combined with an L1-penalty that gives rise to Sparse GCCA (SGCCA) which 
+SGCCA extends RGCCA to address the issue of variable selection. Specifically,
+RGCCA is combined with an L1-penalty that gives rise to Sparse GCCA (SGCCA) which
 is implemented in the function sgcca().
-Given \eqn{J} matrices \eqn{X_1, X_2, ..., X_J}, that represent 
-\eqn{J} sets of variables observed on the same set of \eqn{n} individuals. The matrices 
-\eqn{X_1, X_2, ..., X_J} must have the same number of rows, but may 
+Given \eqn{J} matrices \eqn{X_1, X_2, ..., X_J}, that represent
+\eqn{J} sets of variables observed on the same set of \eqn{n} individuals. The matrices
+\eqn{X_1, X_2, ..., X_J} must have the same number of rows, but may
 (and usually will) have different numbers of columns. Blocks are not necessarily fully connected
-within the SGCCA framework. Hence the use of SGCCA requires 
-the construction (user specified) of a design matrix (\eqn{C}) that characterizes 
-the connections between blocks. Elements of the symmetric design matrix \eqn{C = (c_{jk})} 
-are equal to 1 if block \eqn{j} and block \eqn{k} are connected, and 0 otherwise. 
-The SGCCA algorithm is very similar to the RGCCA algorithm and keeps the same monotone 
-convergence properties (i.e. the bounded criteria to be maximized increases 
+within the SGCCA framework. Hence the use of SGCCA requires
+the construction (user specified) of a design matrix (\eqn{C}) that characterizes
+the connections between blocks. Elements of the symmetric design matrix \eqn{C = (c_{jk})}
+are equal to 1 if block \eqn{j} and block \eqn{k} are connected, and 0 otherwise.
+The SGCCA algorithm is very similar to the RGCCA algorithm and keeps the same monotone
+convergence properties (i.e. the bounded criteria to be maximized increases
 at each step of the iterative procedure and hits at convergence a stationary point).
-Moreover, using a deflation strategy, sgcca() enables the computation of several SGCCA block 
-components (specified by ncomp) for each block. Block components for each block are guaranteed to be orthogonal 
+Moreover, using a deflation strategy, sgcca() enables the computation of several SGCCA block
+components (specified by ncomp) for each block. Block components for each block are guaranteed to be orthogonal
 when using this deflation strategy. The so-called symmetric deflation is considered in this implementation,
-i.e. each block is deflated with respect to its own component. 
+i.e. each block is deflated with respect to its own component.
 Moreover, we stress that the numbers of components per block could differ from one block to another.
 }
 \examples{
@@ -92,22 +92,22 @@ Loc <- factor(ge_cgh_locIGR$y) ; levels(Loc) <- colnames(ge_cgh_locIGR$multibloc
 C <-  matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
 tau = c(1, 1, 0)
 
-# rgcca algorithm using the dual formulation for X1 and X2 
+# rgcca algorithm using the dual formulation for X1 and X2
 # and the dual formulation for X3
 A[[3]] = A[[3]][, -3]
 result.rgcca = rgcca(A, C, tau, ncomp = c(2, 2, 1), scheme = "factorial", verbose = TRUE)
 # sgcca algorithm
-result.sgcca = sgcca(A, C, c1 = c(.071,.2, 1), ncomp = c(2, 2, 1), 
+result.sgcca = sgcca(A, C, c1 = c(.071,.2, 1), ncomp = c(2, 2, 1),
                      scheme = "centroid", verbose = TRUE)
 
 ############################
 # plot(y1, y2) for (RGCCA) #
 ############################
 layout(t(1:2))
-plot(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[2]][, 1], col = "white", xlab = "Y1 (GE)", 
+plot(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[2]][, 1], col = "white", xlab = "Y1 (GE)",
      ylab = "Y2 (CGH)", main = "Factorial plan of RGCCA")
 text(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[2]][, 1], Loc, col = as.numeric(Loc), cex = .6)
-plot(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[1]][, 2], col = "white", xlab = "Y1 (GE)", 
+plot(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[1]][, 2], col = "white", xlab = "Y1 (GE)",
      ylab = "Y2 (GE)", main = "Factorial plan of RGCCA")
 text(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[1]][, 2], Loc, col = as.numeric(Loc), cex = .6)
 
@@ -115,28 +115,28 @@ text(result.rgcca$Y[[1]][, 1], result.rgcca$Y[[1]][, 2], Loc, col = as.numeric(L
 # plot(y1, y2) for (SGCCA) #
 ############################
 layout(t(1:2))
-plot(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[2]][, 1], col = "white", xlab = "Y1 (GE)", 
+plot(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[2]][, 1], col = "white", xlab = "Y1 (GE)",
      ylab = "Y2 (CGH)", main = "Factorial plan of SGCCA")
 text(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[2]][, 1], Loc, col = as.numeric(Loc), cex = .6)
 
-plot(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[1]][, 2], col = "white", xlab = "Y1 (GE)", 
+plot(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[1]][, 2], col = "white", xlab = "Y1 (GE)",
      ylab = "Y2 (GE)", main = "Factorial plan of SGCCA")
 text(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[1]][, 2], Loc, col = as.numeric(Loc), cex = .6)
 
-# sgcca algorithm with multiple components and different L1 penalties for each components 
+# sgcca algorithm with multiple components and different L1 penalties for each components
 # (-> c1 is a matrix)
 init = "random"
-result.sgcca = sgcca(A, C, c1 = matrix(c(.071,.2, 1, 0.06, 0.15, 1), nrow = 2, byrow = TRUE), 
-                     ncomp = c(2, 2, 1), scheme = "factorial", scale = TRUE, bias = TRUE, 
+result.sgcca = sgcca(A, C, c1 = matrix(c(.071,.2, 1, 0.06, 0.15, 1), nrow = 2, byrow = TRUE),
+                     ncomp = c(2, 2, 1), scheme = "factorial", scale = TRUE, bias = TRUE,
                      init = init, verbose = TRUE)
 # number of non zero elements per dimension
-apply(result.sgcca$a[[1]], 2, function(x) sum(x!=0)) 
+apply(result.sgcca$a[[1]], 2, function(x) sum(x!=0))
      #(-> 145 non zero elements for a11 and 107 non zero elements for a12)
-apply(result.sgcca$a[[2]], 2, function(x) sum(x!=0)) 
+apply(result.sgcca$a[[2]], 2, function(x) sum(x!=0))
      #(-> 85 non zero elements for a21 and 52 non zero elements for a22)
 init = "svd"
-result.sgcca = sgcca(A, C, c1 = matrix(c(.071,.2, 1, 0.06, 0.15, 1), nrow = 2, byrow = TRUE), 
-                     ncomp = c(2, 2, 1), scheme = "factorial", scale = TRUE, bias = TRUE, 
+result.sgcca = sgcca(A, C, c1 = matrix(c(.071,.2, 1, 0.06, 0.15, 1), nrow = 2, byrow = TRUE),
+                     ncomp = c(2, 2, 1), scheme = "factorial", scale = TRUE, bias = TRUE,
                      init = init, verbose = TRUE)}
 }
 \references{

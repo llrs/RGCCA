@@ -8,12 +8,12 @@ sgccak(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FALSE,
   tol = .Machine$double.eps, init = "svd", bias = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{A}{A list that contains the \eqn{J} blocks of variables from which block components are constructed. 
+\item{A}{A list that contains the \eqn{J} blocks of variables from which block components are constructed.
 It could be eiher the original matrices (\eqn{X_1, X_2, ..., X_J}) or the residual matrices (\eqn{X_{h1}, X_{h2}, ..., X_{hJ}}).}
 
 \item{C}{A design matrix that describes the relationships between blocks.}
 
-\item{c1}{A \eqn{1 * J} vector that contains the value of c1 applied to each block. The L1 bound on a[[j]] is 
+\item{c1}{A \eqn{1 * J} vector that contains the value of c1 applied to each block. The L1 bound on a[[j]] is
 \deqn{ \|a_{j}\|_{\ell_1} \leq c_1[j] \sqrt{p_j}.}
 with \eqn{p_j} the number of variables of \eqn{X_j} and with c1[j] between 0 and 1 (larger L1 bound corresponds to less penalization).}
 
@@ -45,7 +45,7 @@ with \eqn{p_j} the number of variables of \eqn{X_j} and with c1[j] between 0 and
 \item{scheme}{The scheme chosen by the user (user specified).}
 }
 \description{
-The function sgccak() is called by sgcca() and does not have to be used by the user. 
-sgccak() enables the computation of SGCCA block components, outer weight vectors, etc., 
+The function sgccak() is called by sgcca() and does not have to be used by the user.
+sgccak() enables the computation of SGCCA block components, outer weight vectors, etc.,
 for each block and each dimension.
 }

@@ -13,7 +13,7 @@ rgccak(A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 \item{C}{A design matrix that describes the relationships between blocks. (Default: complete design).}
 
 \item{tau}{A \eqn{1 * J} vector that contains the values of the shrinkage parameters \eqn{\tau_j}, \eqn{ j=1, ..., J}. (Default: \eqn{\tau_j = 1}, \eqn{ j=1, ..., J}).
-If tau = "optimal" the shrinkage intensity paramaters are estimated using the Schafer and Strimmer (2005) 
+If tau = "optimal" the shrinkage intensity paramaters are estimated using the Schafer and Strimmer (2005)
 analytical formula.}
 
 \item{scheme}{The value is "horst", "factorial", "centroid" or any diffentiable convex scheme function g designed by the user (default: "centroid").}
@@ -37,7 +37,7 @@ analytical formula.}
 
 \item{crit}{The values of the objective function to be optimized in each iteration of the iterative procedure.}
 
-\item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE): 
+\item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE):
 AVE(for one block), AVE(outer model), AVE(inner model).}
 
 \item{C}{A design matrix that describes the relationships between blocks (user specified).}
@@ -47,9 +47,9 @@ AVE(for one block), AVE(outer model), AVE(inner model).}
 \item{scheme}{The scheme chosen by the user (user specified).}
 }
 \description{
-The function rgccak() is called by rgcca() and does not have to be used by the user. 
-The function rgccak() computes the RGCCA block components, outer weight vectors, etc., 
-for each block and each dimension. Depending on the dimensionality of each block \eqn{X_j , j = 1, ..., J}, 
+The function rgccak() is called by rgcca() and does not have to be used by the user.
+The function rgccak() computes the RGCCA block components, outer weight vectors, etc.,
+for each block and each dimension. Depending on the dimensionality of each block \eqn{X_j , j = 1, ..., J},
 the primal (when \eqn{n > p_j}) or the dual (when \eqn{n < p_j}) algorithm is used (see Tenenhaus et al. 2015)
 }
 \references{
