@@ -1,13 +1,8 @@
-
 context("Testing sgcca")
 
-
-
-
-
 test_that("sgcca output does what it is expected", {
-  library("gliomaData")
-  data("ge_cgh_locIGR")
+
+  data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
   Loc <- factor(ge_cgh_locIGR$y) ; levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
   C <-  matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
