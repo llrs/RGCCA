@@ -4,8 +4,6 @@ language: R
 sudo: false
 cache: packages
 
-before_install:
-  - Rscript -e "install.packages('http://biodev.cea.fr/sgcca/gliomaData_0.4.tar.gz')"
 after_success:
   - Rscript -e 'covr::codecov()'
 os:
