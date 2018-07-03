@@ -13,6 +13,7 @@ VignetteBuilder: knitr
 Imports: MASS, Deriv
 Remotes: llrs/gliomaData
 RoxygenNote: 6.0.1
+ENCODING: UTF-8
 NeedsCompilation: no
 Packaged: 2017-05-10 21:19:55 UTC; tenenhaus_art
 Repository: CRAN
