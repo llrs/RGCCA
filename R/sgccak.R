@@ -21,12 +21,12 @@
 #' @return \item{C}{A design matrix that describes the relationships between blocks (user specified).}
 #' @return \item{scheme}{The scheme chosen by the user (user specified).}
 #' @title Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)
+#' @importFrom Deriv Deriv
 #' @export sgccak
 sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FALSE,
                    tol = .Machine$double.eps, init="svd", bias = TRUE, verbose = TRUE) {
   J <- length(A)
   pjs <- vapply(A, NCOL, numeric(1L))
-  AVE_X <- rep(0, J)
   # Data standardization
   # if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
   #  Choose J arbitrary vectors
@@ -45,7 +45,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
   # 	Apply the constraints of the general otpimization problem
   # 	and compute the outer components
   iter <- 1
-  converg <- crit <- numeric()
+  crit <- numeric()
   Y <- Z <- matrix(0, NROW(A[[1]]), J)
   for (q in seq_len(J)) {
     Y[, q] <- apply(A[[q]], 1, miscrossprod, a[[q]])
