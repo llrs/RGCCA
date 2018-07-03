@@ -1,7 +1,7 @@
 context("Testing sgcca")
 
 test_that("sgcca output does what it is expected", {
-
+  skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
   Loc <- factor(ge_cgh_locIGR$y) ; levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
