@@ -119,7 +119,7 @@ sgccak <-  function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = F
 
 
   if (iter > 1000) {
-    warning("The SGCCA algorithm did not converge after 1000 iterations.")
+    stop("The SGCCA algorithm did not converge after 1000 iterations.")
   }
   if(iter<1000 & verbose) {
     message("The SGCCA algorithm converged to a stationary point after", iter-1, "iterations \n")

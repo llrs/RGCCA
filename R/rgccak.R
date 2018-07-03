@@ -283,9 +283,15 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
   }
 
-  if (iter > 1000) warning("The RGCCA algorithm did not converge after 1000 iterations.")
-  if (iter < 1000 & verbose) message("The RGCCA algorithm converged to a stationary point after", iter-1, "iterations \n")
-  if (verbose) plot(crit[seq_len(iter)], xlab = "iteration", ylab = "criteria")
+  if (iter > 1000) {
+    stop("The RGCCA algorithm did not converge after 1000 iterations.")
+  }
+  if (iter < 1000 & verbose) {
+    message("The RGCCA algorithm converged to a stationary point after", iter-1, "iterations \n")
+  }
+  if (verbose) {
+    plot(crit[seq_len(iter)], xlab = "iteration", ylab = "criteria")
+  }
 
   AVEinner <- sum(C * cor(Y)^2/2)/(sum(C)/2)
   result <- list(Y = Y, a = a, crit = crit,
