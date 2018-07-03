@@ -7,6 +7,5 @@
 #' @export miscrossprod
 
 miscrossprod <- function(x, y) {
-  d.p <- sum(drop(x) * drop(y), na.rm = TRUE)
-  return(d.p)
+  sum(drop(x) * drop(y), na.rm = TRUE)
 }
