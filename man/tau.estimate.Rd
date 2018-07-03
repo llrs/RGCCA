@@ -13,7 +13,7 @@ tau.estimate(x)
 \item{tau}{Optimal shrinkage intensity parameter}
 }
 \description{
-Estimation of the optimal shrinkage parameters as described in [1,2] and implemented 
+Estimation of the optimal shrinkage parameters as described in [1,2] and implemented
 in a more general version within the SHIP package [2].
 }
 \references{
