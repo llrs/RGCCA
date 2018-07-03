@@ -11,17 +11,13 @@ tau.estimate <- function(x) {
   if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
     stop("The data matrix must be numeric!")
   }
-  p <- NCOL(x)
   n <- NROW(x)
-  covm <- cov(x)
   corm <- cor(x)
   xs <- scale(x, center = TRUE, scale = TRUE)
   v <- (n / ((n - 1)^3)) * (crossprod(xs^2) - 1 / n * (crossprod(xs))^2)
   diag(v) <- 0
-  m <- matrix(rep(apply(xs^2, 2, mean), p), p, p)
   I <- diag(NCOL(x))
   d <- (corm - I)^2
   tau <- (sum(v)) / sum(d)
-  tau <- max(min(tau, 1), 0)
-  return(tau)
+  max(min(tau, 1), 0)
 }
