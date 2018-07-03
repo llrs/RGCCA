@@ -1,5 +1,5 @@
-#' Estimation of the optimal shrinkage parameters as described in [1,2] and implemented 
-#' in a more general version within the SHIP package [2]. 
+#' Estimation of the optimal shrinkage parameters as described in [1,2] and implemented
+#' in a more general version within the SHIP package [2].
 #' @param x  Data set on which the covariance matrix is estimated.
 #' @return \item{tau}{Optimal shrinkage intensity parameter}
 #' @title Optimal shrinkage intensity parameters.
@@ -8,20 +8,20 @@
 #' @export tau.estimate
 
 tau.estimate <- function(x) {
-  if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) 
+  if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
     stop("The data matrix must be numeric!")
+  }
   p <- NCOL(x)
   n <- NROW(x)
   covm <- cov(x)
   corm <- cor(x)
   xs <- scale(x, center = TRUE, scale = TRUE)
-  v <- (n/((n - 1)^3)) * (crossprod(xs^2) - 1/n * (crossprod(xs))^2)
+  v <- (n / ((n - 1)^3)) * (crossprod(xs^2) - 1 / n * (crossprod(xs))^2)
   diag(v) <- 0
   m <- matrix(rep(apply(xs^2, 2, mean), p), p, p)
   I <- diag(NCOL(x))
   d <- (corm - I)^2
-  tau <- (sum(v))/sum(d)
+  tau <- (sum(v)) / sum(d)
   tau <- max(min(tau, 1), 0)
   return(tau)
- }
-
+}

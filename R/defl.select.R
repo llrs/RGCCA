@@ -10,18 +10,18 @@
 #' @title deflation function
 #' @export defl.select
 
-defl.select <- function(yy,rr,nncomp,nn,nbloc) {
+defl.select <- function(yy, rr, nncomp, nn, nbloc) {
   resdefl <- NULL
   pdefl <- NULL
   for (q in seq_len(nbloc)) {
-    if ( nn <= nncomp[q] ) {
-       defltmp <- deflation(rr[[q]],yy[ , q])
-       resdefl[[q]] <- defltmp$R
-       pdefl[[q]]   <- defltmp$p
+    if (nn <= nncomp[q]) {
+      defltmp <- deflation(rr[[q]], yy[, q])
+      resdefl[[q]] <- defltmp$R
+      pdefl[[q]] <- defltmp$p
     } else {
-        resdefl[[q]] <- rr[[q]]
-        pdefl[[q]]   <-	rep(0,NCOL(rr[[q]]))
+      resdefl[[q]] <- rr[[q]]
+      pdefl[[q]] <- rep(0, NCOL(rr[[q]]))
     }
   }
-  return(list(resdefl=resdefl,pdefl=pdefl))
+  return(list(resdefl = resdefl, pdefl = pdefl))
 }

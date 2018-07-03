@@ -135,22 +135,22 @@
 #'      col = lab, cex = .7)
 #' text(Ytest[, 1], Ytest[, 2], substr(rownames(Russett), 1, 1),
 #'      col = lab, cex = .7)
-#'}
+#' }
 #' @export rgcca
 
 
-rgcca <- function(A, C = 1-diag(length(A)), tau = rep(1, length(A)), ncomp = rep(1, length(A)), scheme = "centroid", scale = TRUE , init="svd", bias = TRUE, tol = 1e-8, verbose=TRUE) {
+rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = rep(1, length(A)), scheme = "centroid", scale = TRUE, init="svd", bias = TRUE, tol = 1e-8, verbose=TRUE) {
   if (any(ncomp < 1)) {
     stop("Compute at least one component per block!")
   }
   pjs <- vapply(A, NCOL, numeric(1L))
   nb_row <- NROW(A[[1]])
-  if (any(ncomp-pjs > 0)) {
+  if (any(ncomp - pjs > 0)) {
     stop("For each block, choose a number of components smaller than the number of variables!")
   }
   #-------------------------------------------------------
   if (mode(scheme) != "function") {
-    if ((scheme != "horst" ) & (scheme != "factorial") & (scheme != "centroid")) {
+    if ((scheme != "horst") & (scheme != "factorial") & (scheme != "centroid")) {
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
     if (verbose) message("Computation of the RGCCA block components based on the", scheme, "scheme \n")
@@ -162,7 +162,9 @@ rgcca <- function(A, C = 1-diag(length(A)), tau = rep(1, length(A)), ncomp = rep
   #-------------------------------------------------------
 
   if (scale == TRUE) {
-    A = lapply(A, function(x) {scale2(x, bias = bias)/sqrt(NCOL(x))})
+    A <- lapply(A, function(x) {
+      scale2(x, bias = bias) / sqrt(NCOL(x))
+    })
   }
 
   if (!is.numeric(tau) & verbose) {
@@ -174,78 +176,80 @@ rgcca <- function(A, C = 1-diag(length(A)), tau = rep(1, length(A)), ncomp = rep
     }
   }
   J <- length(A)
-  AVE_X = vector("list", length = J)
+  AVE_X <- vector("list", length = J)
   AVE_outer <- vector()
-  ndefl <- ncomp-1
+  ndefl <- ncomp - 1
   N <- max(ndefl)
   nb_ind <- NROW(A[[1]])
-  primal_dual = rep("primal", J)
-  primal_dual[which(nb_row<pjs)] = "dual"
+  primal_dual <- rep("primal", J)
+  primal_dual[which(nb_row < pjs)] <- "dual"
   Y <- vector("list", length = J)
 
 
   if (N == 0) {
-    result <- rgccak(A, C, tau=tau , scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
-    for (b in seq_len(J)){
-      Y[[b]] <- result$Y[,b, drop = FALSE]
+    result <- rgccak(A, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+    for (b in seq_len(J)) {
+      Y[[b]] <- result$Y[, b, drop = FALSE]
 
-      #Average Variance Explained (AVE) per block
-      AVE_X[[b]] =  mean(cor(A[[b]], Y[[b]])^2)
+      # Average Variance Explained (AVE) per block
+      AVE_X[[b]] <- mean(cor(A[[b]], Y[[b]])^2)
     }
-    #AVE outer
-    AVE_outer <- sum(pjs * unlist(AVE_X))/sum(pjs)
+    # AVE outer
+    AVE_outer <- sum(pjs * unlist(AVE_X)) / sum(pjs)
 
-    AVE <- list(AVE_X = AVE_X,
-                AVE_outer = AVE_outer,
-                AVE_inner = result$AVE_inner)
+    AVE <- list(
+      AVE_X = AVE_X,
+      AVE_outer = AVE_outer,
+      AVE_inner = result$AVE_inner
+    )
 
     a <- lapply(result$a, cbind)
 
     for (b in seq_len(J)) {
-      rownames(a[[b]]) = colnames(A[[b]])
-      rownames(Y[[b]]) = rownames(A[[b]])
-      colnames(Y[[b]]) = "comp1"
+      rownames(a[[b]]) <- colnames(A[[b]])
+      rownames(Y[[b]]) <- rownames(A[[b]])
+      colnames(Y[[b]]) <- "comp1"
     }
 
-    out <- list(Y=Y, a =a, astar=a, C=C,
-                tau=result$tau, scheme=scheme,
-                ncomp=ncomp, crit=result$crit,
-                primal_dual = primal_dual,
-                AVE=AVE)
+    out <- list(
+      Y = Y, a = a, astar = a, C = C,
+      tau = result$tau, scheme = scheme,
+      ncomp = ncomp, crit = result$crit,
+      primal_dual = primal_dual,
+      AVE = AVE
+    )
 
     class(out) <- "rgcca"
     return(out)
   } else {
-
-
-    crit = vector("list", length = N)
-    AVE_inner <- rep(NA,max(ncomp))
+    crit <- vector("list", length = N)
+    AVE_inner <- rep(NA, max(ncomp))
 
     R <- A
     P <- a <- astar <- NULL
 
     if (is.numeric(tau)) {
-      tau_mat = tau
+      tau_mat <- tau
     } else {
-      tau_mat = matrix(NA, max(ncomp), J)
+      tau_mat <- matrix(NA, max(ncomp), J)
     }
 
     for (b in seq_len(J)) {
-      P[[b]] <- a[[b]] <- astar[[b]] <- matrix(NA,pjs[[b]],N+1)
-      Y[[b]] <- matrix(NA,nb_ind,N+1)
+      P[[b]] <- a[[b]] <- astar[[b]] <- matrix(NA, pjs[[b]], N + 1)
+      Y[[b]] <- matrix(NA, nb_ind, N + 1)
     }
 
     for (n in seq_len(N)) {
       if (verbose) {
         message("Computation of the RGCCA block components #", n, " is under progress...\n")
       }
-      if(is.vector(tau)) {
-        rgcca.result <- rgccak(R, C, tau = tau , scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
+      if (is.vector(tau)) {
+        rgcca.result <- rgccak(R, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
       } else {
-        rgcca.result <- rgccak(R, C, tau = tau[n, ] , scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
+        rgcca.result <- rgccak(R, C, tau = tau[n, ], scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
       }
       if (!is.numeric(tau)) {
-        tau_mat[n, ] = rgcca.result$tau
+        tau_mat[n, ] <- rgcca.result$tau
       }
       AVE_inner[n] <- rgcca.result$AVE_inner
       crit[[n]] <- rgcca.result$crit
@@ -253,69 +257,73 @@ rgcca <- function(A, C = 1-diag(length(A)), tau = rep(1, length(A)), ncomp = rep
       defla.result <- defl.select(rgcca.result$Y, R, ndefl, n, nbloc = J)
       R <- defla.result$resdefl
       for (b in seq_len(J)) {
-        Y[[b]][,n] <- rgcca.result$Y[ , b]
-        P[[b]][,n] <- defla.result$pdefl[[b]]
-        a[[b]][,n] <- rgcca.result$a[[b]]
+        Y[[b]][, n] <- rgcca.result$Y[, b]
+        P[[b]][, n] <- defla.result$pdefl[[b]]
+        a[[b]][, n] <- rgcca.result$a[[b]]
       }
-      if (n==1) {
+      if (n == 1) {
         for (b in seq_len(J)) {
-          astar[[b]][,n] <- rgcca.result$a[[b]]
+          astar[[b]][, n] <- rgcca.result$a[[b]]
         }
       } else {
         for (b in seq_len(J)) {
-          astar[[b]][,n] <- rgcca.result$a[[b]] - astar[[b]][,(1:n-1), drop= FALSE] %*% drop( t(a[[b]][,n]) %*% P[[b]][,1:(n-1),drop= FALSE] )
+          astar[[b]][, n] <- rgcca.result$a[[b]] - astar[[b]][, (1:n - 1), drop = FALSE] %*% drop(t(a[[b]][, n]) %*% P[[b]][, 1:(n - 1), drop = FALSE])
         }
       }
     }
 
     if (verbose) {
-      message("Computation of the RGCCA block components #", N+1, " is under progress ... \n")
+      message("Computation of the RGCCA block components #", N + 1, " is under progress ... \n")
     }
-    if(is.vector(tau)){
-      rgcca.result <- rgccak(R, C, tau = tau , scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
+    if (is.vector(tau)) {
+      rgcca.result <- rgccak(R, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
     } else {
-      rgcca.result <- rgccak(R, C, tau = tau[N+1, ] , scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
+      rgcca.result <- rgccak(R, C, tau = tau[N + 1, ], scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
     }
-    crit[[N+1]] <- rgcca.result$crit
+    crit[[N + 1]] <- rgcca.result$crit
     if (!is.numeric(tau)) {
-      tau_mat[N+1, ] = rgcca.result$tau
+      tau_mat[N + 1, ] <- rgcca.result$tau
     }
     AVE_inner[max(ncomp)] <- rgcca.result$AVE_inner
 
     for (b in seq_len(J)) {
-      Y[[b]][,N+1]     <- rgcca.result$Y[ ,b]
-      a[[b]][,N+1]     <- rgcca.result$a[[b]]
-      astar[[b]][,N+1] <- rgcca.result$a[[b]] - astar[[b]][,(1:N),drop= FALSE] %*% drop( t(a[[b]][,(N+1)]) %*% P[[b]][,1:(N),drop= FALSE] )
-      rownames(a[[b]]) = rownames(astar[[b]]) = colnames(A[[b]])
-      rownames(Y[[b]]) = rownames(A[[b]])
-      colnames(Y[[b]]) = paste0("comp", 1:max(ncomp))
+      Y[[b]][, N + 1] <- rgcca.result$Y[, b]
+      a[[b]][, N + 1] <- rgcca.result$a[[b]]
+      astar[[b]][, N + 1] <- rgcca.result$a[[b]] - astar[[b]][, (1:N), drop = FALSE] %*% drop(t(a[[b]][, (N + 1)]) %*% P[[b]][, 1:(N), drop = FALSE])
+      rownames(a[[b]]) <- rownames(astar[[b]]) <- colnames(A[[b]])
+      rownames(Y[[b]]) <- rownames(A[[b]])
+      colnames(Y[[b]]) <- paste0("comp", 1:max(ncomp))
     }
 
-    #Average Variance Explained (AVE) per block
+    # Average Variance Explained (AVE) per block
     for (j in seq_len(J)) {
-      AVE_X[[j]] =  apply(cor(A[[j]], Y[[j]])^2, 2, mean)
+      AVE_X[[j]] <- apply(cor(A[[j]], Y[[j]])^2, 2, mean)
     }
 
-    #AVE outer
-    outer = matrix(unlist(AVE_X), nrow = max(ncomp))
+    # AVE outer
+    outer <- matrix(unlist(AVE_X), nrow = max(ncomp))
     for (j in seq_len(max(ncomp))) {
-      AVE_outer[j] <- sum(pjs * outer[j, ])/sum(pjs)
+      AVE_outer[j] <- sum(pjs * outer[j, ]) / sum(pjs)
     }
 
-    Y = shave.matlist(Y, ncomp)
-    AVE_X = shave.veclist(AVE_X, ncomp)
+    Y <- shave.matlist(Y, ncomp)
+    AVE_X <- shave.veclist(AVE_X, ncomp)
 
-    AVE <- list(AVE_X = AVE_X,
-                AVE_outer_model = AVE_outer,
-                AVE_inner_model = AVE_inner)
+    AVE <- list(
+      AVE_X = AVE_X,
+      AVE_outer_model = AVE_outer,
+      AVE_inner_model = AVE_inner
+    )
 
-    out <- list(Y = shave.matlist(Y, ncomp),
-                a = shave.matlist(a, ncomp),
-                astar = shave.matlist(astar, ncomp),
-                C = C, tau = tau_mat,
-                scheme = scheme, ncomp=ncomp, crit = crit,
-                primal_dual = primal_dual,
-                AVE = AVE)
+    out <- list(
+      Y = shave.matlist(Y, ncomp),
+      a = shave.matlist(a, ncomp),
+      astar = shave.matlist(astar, ncomp),
+      C = C, tau = tau_mat,
+      scheme = scheme, ncomp = ncomp, crit = crit,
+      primal_dual = primal_dual,
+      AVE = AVE
+    )
 
     class(out) <- "rgcca"
     return(out)
