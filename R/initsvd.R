@@ -1,7 +1,9 @@
 initsvd <- function(X) {
   n <- NROW(X)
   p <- NCOL(X)
-  ifelse(n >= p, return(svd(X, nu = 0, nv = 1)$v)
-    , return(svd(X, nu = 1, nv = 0)$u)
-  )
+  if(n >= p){
+    svd(X, nu = 0, nv = 1)$v
+  } else {
+    svd(X, nu = 1, nv = 0)$u
+  }
 }
