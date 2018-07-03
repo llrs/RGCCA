@@ -159,6 +159,9 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     message("Computation of the RGCCA block components based on the g scheme \n")
   }
 
+  if (!init %in% c("svd", "random")) {
+    stop("init should be either random or by SVD.")
+  }
   #-------------------------------------------------------
 
   if (scale == TRUE) {
