@@ -143,18 +143,19 @@ sgcca <- function (A, C = 1-diag(length(A)), c1 = rep(1, length(A)), ncomp = rep
     if ((scheme != "horst" ) & (scheme != "factorial") & (scheme != "centroid")) {
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
-    if (verbose) cat("Computation of the SGCCA block components based on the", scheme, "scheme \n")
+    if (verbose) {
+      message("Computation of the SGCCA block components based on the", scheme, "scheme \n")
+    }
   }
   if (mode(scheme) == "function" & verbose) {
-    cat("Computation of the SGCCA block components based on the g scheme \n")
+    message("Computation of the SGCCA block components based on the g scheme \n")
   }
 
 
   #-------------------------------------------------------
 
   if (scale == TRUE) {
-    A = lapply(A, function(x) scale2(x, bias = bias))
-    A = lapply(A, function(x) x/sqrt(NCOL(x)))
+    A = lapply(A, function(x) {scale2(x, bias = bias)/sqrt(NCOL(x))})
   }
   ####################################
   # sgcca with 1 component per block #
@@ -222,7 +223,9 @@ sgcca <- function (A, C = 1-diag(length(A)), c1 = rep(1, length(A)), ncomp = rep
 
 
   for (n in seq_len(N)) {
-    if (verbose) cat(paste0("Computation of the SGCCA block components #", n, " is under progress... \n"))
+    if (verbose) {
+      message("Computation of the SGCCA block components #", n, " is under progress... \n")
+    }
     if(is.vector(c1)){
       sgcca.result <- sgccak(R, C, c1 = c1 , scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
     } else{
@@ -248,7 +251,9 @@ sgcca <- function (A, C = 1-diag(length(A)), c1 = rep(1, length(A)), ncomp = rep
       for (b in seq_len(J)) astar[[b]][,n] <- sgcca.result$a[[b]] -  astar[[b]][,(1:n-1),drop=F] %*% drop( t(a[[b]][,n]) %*% P[[b]][,1:(n-1),drop=F] )
     }
   }
-  if (verbose) cat(paste0("Computation of the SGCCA block components #", N+1, " is under progress...\n"))
+  if (verbose) {
+    message("Computation of the SGCCA block components #", N+1, " is under progress...\n")
+  }
   if(is.vector(c1)) {
     sgcca.result <- sgccak(R, C, c1 = c1, scheme=scheme, init = init, bias = bias, tol = tol, verbose=verbose)
   } else{
@@ -267,7 +272,9 @@ sgcca <- function (A, C = 1-diag(length(A)), c1 = rep(1, length(A)), ncomp = rep
   }
 
   #Average Variance Explained (AVE) per block
-  for (j in seq_len(J)) AVE_X[[j]] =  apply(cor(A[[j]], Y[[j]])^2, 2, mean)
+  for (j in seq_len(J)) {
+    AVE_X[[j]] =  apply(cor(A[[j]], Y[[j]])^2, 2, mean)
+  }
 
   #AVE outer
   outer = matrix(unlist(AVE_X), nrow = max(ncomp))

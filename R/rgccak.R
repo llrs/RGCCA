@@ -264,11 +264,12 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     , crit[iter] <- sum(C*scheme(cov2(Y, bias = bias)))
     )
 
-    if (verbose & (iter %% 1)==0)
-      cat(" Iter: ",formatC(iter,width=3, format="d"),
-          " Fit:",  formatC(crit[iter], digits=8, width=10, format="f"),
-          " Dif: ", formatC(crit[iter]-crit_old, digits=8, width=10, format="f"),
-          "\n")
+    if (verbose & (iter %% 1)==0) {
+      message(" Iter: ",formatC(iter,width=3, format="d"),
+              " Fit:",  formatC(crit[iter], digits=8, width=10, format="f"),
+              " Dif: ", formatC(crit[iter]-crit_old, digits=8, width=10, format="f"),
+              "\n")
+    }
 
     stopping_criteria = c(drop(crossprod(Reduce("c", mapply("-", a, a_old))))
                           , crit[iter]-crit_old)

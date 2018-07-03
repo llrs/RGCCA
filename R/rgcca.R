@@ -162,7 +162,7 @@ rgcca <- function(A, C = 1-diag(length(A)), tau = rep(1, length(A)), ncomp = rep
   #-------------------------------------------------------
 
   if (scale == TRUE) {
-    A = lapply(A, function(x) scale2(x, bias = bias)/sqrt(NCOL(x)))
+    A = lapply(A, function(x) {scale2(x, bias = bias)/sqrt(NCOL(x))})
   }
 
   if (!is.numeric(tau) & verbose) {
@@ -250,12 +250,10 @@ rgcca <- function(A, C = 1-diag(length(A)), tau = rep(1, length(A)), ncomp = rep
       AVE_inner[n] <- rgcca.result$AVE_inner
       crit[[n]] <- rgcca.result$crit
 
-      for (b in seq_len(J)) {
-        Y[[b]][,n] <- rgcca.result$Y[ , b]
-      }
       defla.result <- defl.select(rgcca.result$Y, R, ndefl, n, nbloc = J)
       R <- defla.result$resdefl
       for (b in seq_len(J)) {
+        Y[[b]][,n] <- rgcca.result$Y[ , b]
         P[[b]][,n] <- defla.result$pdefl[[b]]
         a[[b]][,n] <- rgcca.result$a[[b]]
       }

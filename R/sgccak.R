@@ -75,9 +75,13 @@ sgccak <-  function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = F
         }
 
         else{
-          if (scheme == "horst"    ) CbyCovq <- C[q, ]
-          if (scheme == "factorial") CbyCovq <- C[q, ]*2*cov2(Y, Y[, q], bias = bias)
-          if (scheme == "centroid" ) CbyCovq <- C[q, ]*sign(cov2(Y, Y[,q], bias = bias))
+          if (scheme == "horst"    ) {
+            CbyCovq <- C[q, ]
+          } else if (scheme == "factorial") {
+            CbyCovq <- C[q, ]*2*cov2(Y, Y[, q], bias = bias)
+          } else if (scheme == "centroid" ) {
+            CbyCovq <- C[q, ]*sign(cov2(Y, Y[,q], bias = bias))
+          }
         }
 
         Z[,q] <- rowSums(mapply("*", CbyCovq,as.data.frame(Y)))
@@ -96,29 +100,39 @@ sgccak <-  function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = F
 
     # Print out intermediate fit
 
-    if (verbose & (iter %% 1)==0)
-      cat(" Iter: ", formatC(iter,width=3, format="d"),
+    if (verbose & (iter %% 1)==0) {
+      message(" Iter: ", formatC(iter,width=3, format="d"),
           " Fit: ",  formatC(crit[iter], digits=8, width=10, format="f"),
           " Dif: ",  formatC(crit[iter]-crit_old, digits=8, width=10, format="f"),
           "\n")
-
+    }
     stopping_criteria = c(drop(crossprod(Reduce("c", mapply("-", a, a_old))))
                           , abs(crit[iter]-crit_old))
 
-    if ( any(stopping_criteria < tol) | (iter > 1000))
+    if ( any(stopping_criteria < tol) | (iter > 1000)) {
       break
-
+    }
     crit_old = crit[iter]
     a_old <- a
     iter <- iter + 1
   }
 
 
-  if (iter > 1000) warning("The SGCCA algorithm did not converge after 1000 iterations.")
-  if(iter<1000 & verbose) cat("The SGCCA algorithm converged to a stationary point after", iter-1, "iterations \n")
-  if (verbose) plot(crit, xlab = "iteration", ylab = "criteria")
+  if (iter > 1000) {
+    warning("The SGCCA algorithm did not converge after 1000 iterations.")
+  }
+  if(iter<1000 & verbose) {
+    message("The SGCCA algorithm converged to a stationary point after", iter-1, "iterations \n")
+  }
+  if (verbose) {
+    plot(crit, xlab = "iteration", ylab = "criteria")
+  }
 
-  for (q in seq_len(J)) if(sum(a[[q]]!=0) <= 1) warning("Deflation failed because only one variable was selected for block #",q)
+  for (q in seq_len(J)) {
+    if(sum(a[[q]]!=0) <= 1) {
+      warning("Deflation failed because only one variable was selected for block #", q)
+    }
+  }
 
   AVE_inner  <- sum(C*cor(Y)^2/2)/(sum(C)/2) # AVE inner model
 
