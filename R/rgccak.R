@@ -161,9 +161,9 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
       if (scheme == "horst") {
 
         for (j in which.primal) {
+          Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * Y)
           precalc1 <- t(Z[, j]) %*% A[[j]]
           precalc2 <- t(A[[j]]) %*% Z[, j]
-          Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * Y)
 
           if (tau[j]==1) {
             a[[j]] = drop(1/sqrt(precalc1 %*% precalc2)) * precalc2
@@ -260,8 +260,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     if (verbose & (iter %% 1)==0) {
       message(" Iter: ",formatC(iter,width=3, format="d"),
               " Fit:",  formatC(crit[iter], digits=8, width=10, format="f"),
-              " Dif: ", formatC(crit[iter]-crit_old, digits=8, width=10, format="f"),
-              "\n")
+              " Dif: ", formatC(crit[iter]-crit_old, digits=8, width=10, format="f"))
     }
 
     stopping_criteria = c(drop(crossprod(Reduce("c", mapply("-", a, a_old))))
@@ -280,7 +279,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     stop("The RGCCA algorithm did not converge after 1000 iterations.")
   }
   if (iter < 1000 & verbose) {
-    message("The RGCCA algorithm converged to a stationary point after", iter-1, "iterations \n")
+    message("The RGCCA algorithm converged to a stationary point after", iter-1, "iterations")
   }
   if (verbose) {
     plot(crit[seq_len(iter)], xlab = "iteration", ylab = "criteria")
