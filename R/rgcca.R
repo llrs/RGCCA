@@ -153,10 +153,10 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     if ((scheme != "horst") & (scheme != "factorial") & (scheme != "centroid")) {
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
-    if (verbose) message("Computation of the RGCCA block components based on the", scheme, "scheme \n")
+    if (verbose) message("Computation of the RGCCA block components based on the", scheme, "scheme")
   }
   if (mode(scheme) == "function" & verbose) {
-    message("Computation of the RGCCA block components based on the g scheme \n")
+    message("Computation of the RGCCA block components based on the g scheme")
   }
 
   if (!init %in% c("svd", "random")) {
@@ -171,11 +171,11 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
   }
 
   if (!is.numeric(tau) & verbose) {
-    message("Optimal Shrinkage intensity paramaters are estimated \n")
+    message("Optimal Shrinkage intensity paramaters are estimated")
   }
   else {
     if (is.numeric(tau) & verbose) {
-      message("Shrinkage intensity paramaters are chosen manually \n")
+      message("Shrinkage intensity paramaters are chosen manually")
     }
   }
   J <- length(A)
@@ -244,7 +244,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
 
     for (n in seq_len(N)) {
       if (verbose) {
-        message("Computation of the RGCCA block components #", n, " is under progress...\n")
+        message("Computation of the RGCCA block components #", n, " is under progress...")
       }
       if (is.vector(tau)) {
         rgcca.result <- rgccak(R, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
@@ -276,7 +276,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     }
 
     if (verbose) {
-      message("Computation of the RGCCA block components #", N + 1, " is under progress ... \n")
+      message("Computation of the RGCCA block components #", N + 1, " is under progress ...")
     }
     if (is.vector(tau)) {
       rgcca.result <- rgccak(R, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
