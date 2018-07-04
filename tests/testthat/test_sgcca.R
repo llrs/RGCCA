@@ -32,6 +32,14 @@ test_that("sgcca output does what it is expected", {
   expect_equal(result.sgcca$AVE$AVE_outer, c(0.0691671029653102, 0.0425623110059463))
   expect_length(result.sgcca$AVE, 3)
 
+  expect_length(result.sgcca$AVE$AVE_X[[1]], 2)
+  expect_length(result.sgcca$AVE$AVE_X[[2]], 2)
+  expect_length(result.sgcca$AVE$AVE_X[[3]], 1)
+
+  expect_true(all(!is.na(result.sgcca$AVE$AVE_X[[1]])))
+  expect_true(all(!is.na(result.sgcca$AVE$AVE_X[[2]])))
+  expect_true(all(!is.na(result.sgcca$AVE$AVE_X[[3]])))
+
   expect_length(result.sgcca$Y, 3)
   expect_length(result.sgcca$a, 3)
 
@@ -42,6 +50,14 @@ test_that("sgcca output does what it is expected", {
   expect_true(is(result.sgcca$Y[[1]], "matrix"))
   expect_true(is(result.sgcca$Y[[2]], "matrix"))
   expect_true(is(result.sgcca$Y[[3]], "matrix"))
+
+  expect_true(all(!is.na(result.sgcca$Y[[1]][1, ])))
+  expect_true(all(!is.na(result.sgcca$Y[[2]][1, ])))
+  expect_true(all(!is.na(result.sgcca$Y[[3]][1, ])))
+
+  expect_true(all(!is.na(result.sgcca$a[[1]][1, ])))
+  expect_true(all(!is.na(result.sgcca$a[[2]][1, ])))
+  expect_true(all(!is.na(result.sgcca$a[[3]][1, ])))
 
   expect_equal(dim(result.sgcca$a[[1]]), c(15702L, 2L))
 })
