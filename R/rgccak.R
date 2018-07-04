@@ -84,30 +84,28 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   for (j in which.primal) {
     if (tau[j] == 1) {
       a[[j]] <- drop(1/sqrt(crossprod(a[[j]]))) * a[[j]]
-      Y[, j] <- A[[j]] %*% a[[j]]
     } else {
       M[[j]] <- ginv(tau[j] * diag(pjs[j]) + ((1 - tau[j])/(N)) * (crossprod(A[[j]])))
       a[[j]] <- drop(1/sqrt(t(a[[j]]) %*% M[[j]] %*% a[[j]])) * M[[j]] %*% a[[j]]
-      Y[, j] <- A[[j]] %*% a[[j]]}
+    }
+    Y[, j] <- A[[j]] %*% a[[j]]
   }
   for (j in which.dual) {
     if(tau[j] == 1) {
       alpha[[j]] = drop(1/sqrt(t(alpha[[j]])%*%K[[j]]%*% alpha[[j]]))*alpha[[j]]
-      a[[j]] = t(A[[j]])%*%alpha[[j]]
-      Y[, j] = A[[j]] %*% a[[j]]
     } else {
       M[[j]] = tau[j]*diag(n)+(1-tau[j])/(N)*K[[j]]
       Minv[[j]] = ginv(M[[j]])
       alpha[[j]] = drop(1/sqrt(t(alpha[[j]]) %*% M[[j]]%*%K[[j]]%*% alpha[[j]]))*alpha[[j]]
-      a[[j]] = t(A[[j]])%*%alpha[[j]]
-      Y[, j] = A[[j]] %*% a[[j]]
     }
+    a[[j]] = t(A[[j]])%*%alpha[[j]]
+    Y[, j] = A[[j]] %*% a[[j]]
 
   }
 
   if (mode(scheme) != "function") {
     h <- function(x) switch(scheme,horst=x,factorial=x**2,centroid=abs(x))
-  crit_old <- sum(C*h(cov2(Y, bias = bias)))
+    crit_old <- sum(C*h(cov2(Y, bias = bias)))
   } else{
     crit_old <- sum(C*scheme(cov2(Y, bias = bias)))
   }
@@ -185,8 +183,8 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
           } else {
             alpha[[j]] = drop(1/sqrt(precalc1 %*% Minv[[j]] %*% Z[, j]))*(Minv[[j]] %*% Z[, j])
           }
-            a[[j]] = t(A[[j]])%*% alpha[[j]]
-            Y[, j] = A[[j]] %*% a[[j]]
+          a[[j]] = t(A[[j]])%*% alpha[[j]]
+          Y[, j] = A[[j]] %*% a[[j]]
         }
       }
 

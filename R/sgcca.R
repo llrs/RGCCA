@@ -286,7 +286,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   for (b in seq_len(J)) {
     Y[[b]][, N + 1] <- sgcca.result$Y[, b]
     a[[b]][, N + 1] <- sgcca.result$a[[b]]
-    astar[[b]][, N + 1] <- sgcca.result$a[[b]] - astar[[b]][, (1:N), drop = FALSE] %*% drop(t(a[[b]][, (N + 1)]) %*% P[[b]][, seq_len(N), drop = FALSE])
+    astar[[b]][, N + 1] <- sgcca.result$a[[b]] - astar[[b]][, (seq_len(N)), drop = FALSE] %*% drop(t(a[[b]][, (N + 1)]) %*% P[[b]][, seq_len(N), drop = FALSE])
     rownames(a[[b]]) <- rownames(astar[[b]]) <- colnames(A[[b]])
     rownames(Y[[b]]) <- rownames(A[[b]])
     colnames(Y[[b]]) <- paste0("comp", seq_len(max(ncomp)))
