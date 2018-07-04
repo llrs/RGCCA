@@ -2,7 +2,7 @@ Package: RGCCA
 Type: Package
 Title: Regularized and Sparse Generalized Canonical Correlation
         Analysis for Multiblock Data
-Version: 2.1.2
+Version: 2.1.3
 Date: 2017-04-26
 Author: Arthur Tenenhaus and Vincent Guillemot
 Maintainer: Arthur Tenenhaus <arthur.tenenhaus@centralesupelec.fr>
