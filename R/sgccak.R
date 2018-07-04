@@ -32,14 +32,16 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
   #  Choose J arbitrary vectors
   if (init == "svd") {
     # SVD Initialisation of a_j or \alpha_j
-    a <- lapply(A, function(x) return(svd(x, nu = 0, nv = 1)$v)) #
+    a <- lapply(A, function(x) svd(x, nu = 0, nv = 1)$v) #
   } else if (init == "random") {
     a <- lapply(pjs, rnorm)
   } else {
     stop("init should be either random or svd.")
   }
 
-  if (any(c1 < 1 / sqrt(pjs) | c1 > 1)) stop("L1 constraints must vary between 1/sqrt(p_j) and 1.")
+  if (any(c1 < 1 / sqrt(pjs) | c1 > 1)) {
+    stop("L1 constraints must vary between 1/sqrt(p_j) and 1.")
+  }
 
   const <- c1 * sqrt(pjs)
   # 	Apply the constraints of the general otpimization problem
@@ -56,12 +58,12 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
 
   # Compute the value of the objective function
 
-  ifelse((mode(scheme) != "function"), {
+  if (mode(scheme) != "function") {
     g <- function(x) switch(scheme, horst = x, factorial = x**2, centroid = abs(x))
     crit_old <- sum(C * g(cov2(Y, bias = bias)))
+  } else {
+   crit_old <- sum(C * scheme(cov2(Y, bias = bias)))
   }
-  , crit_old <- sum(C * scheme(cov2(Y, bias = bias)))
-  )
 
   if (mode(scheme) == "function") {
     dg <- Deriv::Deriv(scheme, env = parent.frame())
@@ -93,12 +95,11 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
 
     # check for convergence of the SGCCA alogrithm to a solution of the stationnary equations
 
-    ifelse((mode(scheme) != "function"), {
-      g <- function(x) switch(scheme, horst = x, factorial = x**2, centroid = abs(x))
+    if (mode(scheme) != "function") {
       crit[iter] <- sum(C * g(cov2(Y, bias = bias)))
+    } else {
+      crit[iter] <- sum(C * scheme(cov2(Y, bias = bias)))
     }
-    , crit[iter] <- sum(C * scheme(cov2(Y, bias = bias)))
-    )
 
     # Print out intermediate fit
 
@@ -128,7 +129,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
     stop("The SGCCA algorithm did not converge after 1000 iterations.")
   }
   if (iter < 1000 & verbose) {
-    message("The SGCCA algorithm converged to a stationary point after", iter - 1, "iterations \n")
+    message("The SGCCA algorithm converged to a stationary point after", iter - 1, "iterations")
   }
   if (verbose) {
     plot(crit, xlab = "iteration", ylab = "criteria")
