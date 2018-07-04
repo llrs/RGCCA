@@ -31,7 +31,7 @@
 #' @param scale  If scale = TRUE, each block is standardized to zero means and unit variances and then divided by the square root of its number of variables (default: TRUE).
 #' @param init Mode of initialization use in the SGCCA algorithm, either by Singular Value Decompostion ("svd") or random ("random") (default : "svd").
 #' @param bias A logical value for biaised or unbiaised estimator of the var/cov.
-#' @param verbose  Will report progress while computing if verbose = TRUE (default: TRUE).
+#' @param verbose  Will report progress while computing if verbose = TRUE (default: FALSE).
 #' @param tol Stopping value for convergence.
 #' @return \item{Y}{A list of \eqn{J} elements. Each element of Y is a matrix that contains the SGCCA components for each block.}
 #' @return \item{a}{A list of \eqn{J} elements. Each element of a is a matrix that contains the outer weight vectors for each block.}
@@ -111,6 +111,8 @@
 
 
 sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = rep(1, length(A)), scheme = "centroid", scale = TRUE, init = "svd", bias = TRUE, tol = .Machine$double.eps, verbose = FALSE) {
+
+  # ndefl number of deflation per block
   ndefl <- ncomp - 1
   N <- max(ndefl)
   J <- length(A)
@@ -150,11 +152,11 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
     if (verbose) {
-      message("Computation of the SGCCA block components based on the", scheme, "scheme \n")
+      message("Computation of the SGCCA block components based on the", scheme, "scheme")
     }
   }
   if (mode(scheme) == "function" & verbose) {
-    message("Computation of the SGCCA block components based on the g scheme \n")
+    message("Computation of the SGCCA block components based on the g scheme")
   }
 
 
@@ -169,14 +171,6 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   # sgcca with 1 component per block #
   ####################################
 
-  # ndefl number of deflation per block
-  ndefl <- ncomp - 1
-  N <- max(ndefl)
-  J <- length(A)
-  pjs <- vapply(A, NCOL, numeric(1L))
-  nb_ind <- NROW(A[[1]])
-  AVE_X <- list()
-  AVE_outer <- rep(NA, max(ncomp))
   if (N == 0) {
     result <- sgccak(A, C, c1, scheme, init = init, bias = bias, tol = tol, verbose = verbose)
     # No deflation (No residual matrices generated).
@@ -237,7 +231,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
 
   for (n in seq_len(N)) {
     if (verbose) {
-      message("Computation of the SGCCA block components #", n, " is under progress... \n")
+      message("Computation of the SGCCA block components #", n, " is under progress...")
     }
     if (is.vector(c1)) {
       sgcca.result <- sgccak(R, C, c1 = c1, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
@@ -257,7 +251,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
     }
     for (q in which(n < ndefl)) {
       if (sum(sgcca.result$a[[q]] != 0) <= 1) {
-        warning("Deflation failed because only one variable was selected for block #", q, "! \n")
+        warning("Deflation failed because only one variable was selected for block #", q, "!")
       }
     }
 
@@ -273,7 +267,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   }
 
   if (verbose) {
-    message("Computation of the SGCCA block components #", N + 1, " is under progress...\n")
+    message("Computation of the SGCCA block components #", N + 1, " is under progress...")
   }
   if (is.vector(c1)) {
     sgcca.result <- sgccak(R, C, c1 = c1, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
