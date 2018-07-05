@@ -36,6 +36,8 @@ If c1 is a matrix, each row \eqn{h} defines the constraints applied to the weigh
 \item{verbose}{Will report progress while computing if verbose = TRUE (default: FALSE).}
 }
 \value{
+A list of class sgcca with the following elements:
+
 \item{Y}{A list of \eqn{J} elements. Each element of Y is a matrix that contains the SGCCA components for each block.}
 
 \item{a}{A list of \eqn{J} elements. Each element of a is a matrix that contains the outer weight vectors for each block.}

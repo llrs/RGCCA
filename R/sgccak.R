@@ -13,6 +13,7 @@
 #' @param bias Logical value for biaised (\eqn{1/n}) or unbiaised (\eqn{1/(n-1)}) estimator of the var/cov.
 #' @param verbose  Reports progress while computing, if verbose = TRUE (default: TRUE).
 #' @param tol Stopping value for convergence.
+#' @return A list with the following elements:
 #' @return \item{Y}{A \eqn{n * J} matrix of SGCCA block components.}
 #' @return \item{a}{A list of \eqn{J} elements. Each element contains the outer weight vector of each block.}
 #' @return \item{crit}{The values of the objective function at each iteration of the iterative procedure.}

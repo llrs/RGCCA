@@ -30,6 +30,8 @@ with \eqn{p_j} the number of variables of \eqn{X_j} and with c1[j] between 0 and
 \item{verbose}{Reports progress while computing, if verbose = TRUE (default: TRUE).}
 }
 \value{
+A list with the following elements:
+
 \item{Y}{A \eqn{n * J} matrix of SGCCA block components.}
 
 \item{a}{A list of \eqn{J} elements. Each element contains the outer weight vector of each block.}
