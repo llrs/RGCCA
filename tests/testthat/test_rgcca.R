@@ -37,7 +37,7 @@ test_that("Example 1:factorial", {
 })
 
 
-test_that("Example 2:function", {
+test_that("Example 2: function", {
   data(Russett)
   X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
   X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
@@ -112,6 +112,46 @@ test_that("Example 3: factorial", {
   expect_equal(result.rgcca$scheme, "factorial")
   expect_equal(result.rgcca$AVE$AVE_inner, 0.38448863486574)
   expect_equal(result.rgcca$AVE$AVE_outer, 0.772561329080763)
+  expect_length(result.rgcca$AVE, 3)
+
+  expect_length(result.rgcca$Y, 3)
+  expect_length(result.rgcca$a, 3)
+
+  expect_true(is(result.rgcca$a[[1]], "matrix"))
+  expect_true(is(result.rgcca$a[[2]], "matrix"))
+  expect_true(is(result.rgcca$a[[3]], "matrix"))
+
+  expect_true(is(result.rgcca$Y[[1]], "matrix"))
+  expect_true(is(result.rgcca$Y[[2]], "matrix"))
+  expect_true(is(result.rgcca$Y[[3]], "matrix"))
+
+  expect_equal(dim(result.rgcca$a[[1]]), c(3L, 1L))
+})
+
+test_that("Example 3: horst", {
+  Ytest <- matrix(0, 47, 3)
+  X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
+  X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
+  X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
+  A <- list(X_agric, X_ind, X_polit)
+  # Define the design matrix (output = C)
+  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
+  result.rgcca <- rgcca(A, C,
+                        tau = rep(1, 3), ncomp = rep(1, 3),
+                        scheme = "horst", verbose = FALSE
+  )
+
+  expect_equal(result.rgcca$C, C)
+  expect_equal(result.rgcca$tau, c(1L, 1L, 1L))
+  expect_equal(result.rgcca$ncomp, c(1L, 1L, 1L))
+  expect_length(result.rgcca$crit, 3L)
+  expect_equal(
+    result.rgcca$crit,
+    c(1.85782476991182, 1.85788048972944, 1.85788049217006)
+  )
+  expect_equal(result.rgcca$scheme, "horst")
+  expect_equal(result.rgcca$AVE$AVE_inner, 0.38637699003069)
+  expect_equal(result.rgcca$AVE$AVE_outer, 0.771735207252893)
   expect_length(result.rgcca$AVE, 3)
 
   expect_length(result.rgcca$Y, 3)
