@@ -1,7 +1,6 @@
 context("Testing sgcca")
 
 test_that("centroid", {
-  skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
   Loc <- factor(ge_cgh_locIGR$y)
@@ -70,7 +69,6 @@ test_that("centroid", {
 
 
 test_that("horst", {
-  skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
   Loc <- factor(ge_cgh_locIGR$y)
@@ -135,7 +133,6 @@ test_that("horst", {
 
 
 test_that("factorial", {
-  skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
   Loc <- factor(ge_cgh_locIGR$y)
