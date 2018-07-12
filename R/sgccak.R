@@ -39,7 +39,6 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
   } else {
     stop("init should be either random or svd.")
   }
-
   if (any(c1 < 1 / sqrt(pjs) | c1 > 1)) {
     stop("L1 constraints must vary between 1/sqrt(p_j) and 1.")
   }
@@ -75,9 +74,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
       if (mode(scheme) == "function") {
         dgx <- dg(cov2(Y[, q], Y, bias = bias))
         CbyCovq <- C[q, ] * dgx
-      }
-
-      else {
+      } else {
         if (scheme == "horst") {
           CbyCovq <- C[q, ]
         } else if (scheme == "factorial") {
