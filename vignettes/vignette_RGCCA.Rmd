@@ -1104,7 +1104,7 @@ Moreover, it is possible to use a bootstrap resampling method to assess the stab
 nb_boot = 500 # number of bootstrap samples
 J = length(B)-2
 STAB = list()
-for (j in 1:J)
+for (j in seq_len(J))
   STAB[[j]] = matrix(0, nb_boot, NCOL(B[[j]]))
   
 c1 = c(.071,.2, 1/sqrt(NCOL(B[[3]]))+.2, 1)
@@ -1115,10 +1115,10 @@ for (i in 1:nb_boot){
   Bscr = lapply(B, function(x) x[ind, ])
   res = sgcca(Bscr, C, c1 = c1, ncomp = c(rep(1, length(B))),
               scheme = "factorial", scale = TRUE)
-  for (j in 1:J) STAB[[j]][i, ] = res$a[[j]]
+  for (j in seq_len(J)) STAB[[j]][i, ] = res$a[[j]]
 }
   
-for (j in 1:J) colnames(STAB[[j]]) = colnames(B[[j]])
+for (j in seq_len(J)) colnames(STAB[[j]]) = colnames(B[[j]])
   
 top = 30
 count = lapply(STAB, function(x) apply(x, 2, function(y) sum(y!=0)))
@@ -1173,7 +1173,7 @@ A = list(GE = X1, CGH = X2, LOC = X3)
 J = length(A)
 M = matrix(0, J, J)
 colnames(M) = rownames(M) = names(A)
-for (i in 1:J){
+for (i in seq_len(J)){
   for (j in i:J){
     M[i, j] = rI(A[c(i, j)])
     M[j, i] = M[i, j]
