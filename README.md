@@ -1,3 +1,6 @@
+[![Travis build status](https://travis-ci.org/llrs/RGCCA.svg?branch=master)](https://travis-ci.org/llrs/RGCCA)
+[![Coverage status](https://codecov.io/gh/llrs/RGCCA/branch/master/graph/badge.svg)](https://codecov.io/github/llrs/RGCCA?branch=master)
+
 # RGCCA
 
 The goal of RGCCA is to provide Regularized Canonical Correlation Analysis.

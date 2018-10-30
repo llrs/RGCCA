@@ -28,6 +28,6 @@ VignetteBuilder:
     knitr
 Remotes: 
     llrs/gliomaData
-ENCODING: UTF-8
+Encoding: UTF-8
 NeedsCompilation: no
 RoxygenNote: 6.0.1
