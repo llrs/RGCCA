@@ -2,6 +2,7 @@ context("RGCCA")
 
 test_that("Example 1:factorial", {
   data(Russett)
+  set.seed(45791)
   X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
   X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
   X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
@@ -39,6 +40,7 @@ test_that("Example 1:factorial", {
 
 test_that("Example 2: function", {
   data(Russett)
+  set.seed(45791)
   X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
   X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
   X_polit <- as.matrix(Russett[, c(
@@ -89,6 +91,7 @@ test_that("Example 2: function", {
 
 
 test_that("Example 3: factorial", {
+  set.seed(45791)
   Ytest <- matrix(0, 47, 3)
   X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
   X_ind <- as.matrix(Russett[, c("gnpr", "labo")])

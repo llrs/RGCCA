@@ -2,6 +2,7 @@ context("Testing sgcca")
 
 test_that("centroid", {
   skip_on_travis()
+  set.seed(45791)
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
   Loc <- factor(ge_cgh_locIGR$y)
