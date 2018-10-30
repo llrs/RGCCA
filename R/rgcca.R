@@ -191,11 +191,15 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
 
   if (N == 0) {
     result <- rgccak(A, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+    a <- lapply(result$a, cbind)
     for (b in seq_len(J)) {
       Y[[b]] <- result$Y[, b, drop = FALSE]
 
       # Average Variance Explained (AVE) per block
       AVE_X[[b]] <- mean(cor(A[[b]], Y[[b]])^2)
+      rownames(a[[b]]) <- colnames(A[[b]])
+      rownames(Y[[b]]) <- rownames(A[[b]])
+      colnames(Y[[b]]) <- "comp1"
     }
     # AVE outer
     AVE_outer <- sum(pjs * unlist(AVE_X)) / sum(pjs)
@@ -205,14 +209,6 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
       AVE_outer = AVE_outer,
       AVE_inner = result$AVE_inner
     )
-
-    a <- lapply(result$a, cbind)
-
-    for (b in seq_len(J)) {
-      rownames(a[[b]]) <- colnames(A[[b]])
-      rownames(Y[[b]]) <- rownames(A[[b]])
-      colnames(Y[[b]]) <- "comp1"
-    }
 
     out <- list(
       Y = Y, a = a, astar = a, C = C,
@@ -296,11 +292,9 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
       rownames(a[[b]]) <- rownames(astar[[b]]) <- colnames(A[[b]])
       rownames(Y[[b]]) <- rownames(A[[b]])
       colnames(Y[[b]]) <- paste0("comp", seq_len(max(ncomp)))
-    }
 
-    # Average Variance Explained (AVE) per block
-    for (j in seq_len(J)) {
-      AVE_X[[j]] <- apply(cor(A[[j]], Y[[j]])^2, 2, mean)
+      # Average Variance Explained (AVE) per block
+      AVE_X[[b]] <- apply(cor(A[[b]], Y[[b]])^2, 2, mean)
     }
 
     # AVE outer
