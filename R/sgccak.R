@@ -105,8 +105,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
       message(
         " Iter: ", formatC(iter, width = 3, format = "d"),
         " Fit: ", formatC(crit[iter], digits = 8, width = 10, format = "f"),
-        " Dif: ", formatC(crit[iter] - crit_old, digits = 8, width = 10, format = "f"),
-        "\n"
+        " Dif: ", formatC(crit[iter] - crit_old, digits = 8, width = 10, format = "f")
       )
     }
     stopping_criteria <- c(
@@ -127,7 +126,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
     stop("The SGCCA algorithm did not converge after 1000 iterations.")
   }
   if (iter < 1000 & verbose) {
-    message("The SGCCA algorithm converged to a stationary point after", iter - 1, "iterations")
+    message("The SGCCA algorithm converged to a stationary point after ", iter - 1, " iterations")
   }
   if (verbose) {
     plot(crit, xlab = "iteration", ylab = "criteria")
