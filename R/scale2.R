@@ -10,7 +10,7 @@
 scale2 <- function(A, center = TRUE, scale = TRUE, bias = TRUE) {
   if (center == TRUE & scale == TRUE) {
     A <- scale(A, center = TRUE, scale = FALSE)
-    std <- sqrt(apply(A, 2, function(x) cov2(x, bias = bias)))
+    std <- sqrt(apply(A, 2, cov2, bias = bias))
     if (any(std == 0)) {
       sprintf("there were %d constant variables", sum(std == 0))
       std[std == 0] <- 1
@@ -24,7 +24,7 @@ scale2 <- function(A, center = TRUE, scale = TRUE, bias = TRUE) {
     return(A)
   }
   if (center == FALSE & scale == TRUE) {
-    std <- apply(A, 2, function(x) cov2(x, bias = bias))
+    std <- apply(A, 2, cov2, bias = bias)
     A <- A / matrix(rep(std, NROW(A)), NROW(A), NCOL(A), byrow = TRUE)
     attr(A, "scaled:scale") <- std
     return(A)
