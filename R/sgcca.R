@@ -153,7 +153,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
     if (verbose) {
-      message("Computation of the SGCCA block components based on the", scheme, "scheme")
+      message("Computation of the SGCCA block components based on the ", scheme, " scheme")
     }
   }
   if (mode(scheme) == "function" & verbose) {

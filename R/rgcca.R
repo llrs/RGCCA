@@ -153,7 +153,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     if ((scheme != "horst") & (scheme != "factorial") & (scheme != "centroid")) {
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
-    if (verbose) message("Computation of the RGCCA block components based on the", scheme, "scheme")
+    if (verbose) message("Computation of the RGCCA block components based on the ", scheme, " scheme")
   }
   if (mode(scheme) == "function" & verbose) {
     message("Computation of the RGCCA block components based on the g scheme")
