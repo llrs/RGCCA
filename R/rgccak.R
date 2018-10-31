@@ -63,7 +63,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     }
     for (j in which.dual){
       alpha[[j]] <- initsvd(A[[j]])
-      K[[j]] <- A[[j]]%*%t(A[[j]])
+      K[[j]] <- tcrossprod(A[[j]])
     }
   } else if (init=="random") {
     #Random Initialisation of a_j or \alpha_j
