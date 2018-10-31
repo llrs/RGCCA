@@ -165,9 +165,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
   #-------------------------------------------------------
 
   if (scale == TRUE) {
-    A <- lapply(A, function(x) {
-      scale2(x, bias = bias) / sqrt(NCOL(x))
-    })
+    A <- lapply(A, scale2_, bias = bias)
   }
 
   if (!is.numeric(tau) & verbose) {
@@ -190,7 +188,8 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
 
 
   if (N == 0) {
-    result <- rgccak(A, C, tau = tau, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+    result <- rgccak(A, C, tau = tau, scheme = scheme, init = init, bias = bias,
+                     tol = tol, verbose = verbose)
     a <- lapply(result$a, cbind)
     for (b in seq_len(J)) {
       Y[[b]] <- result$Y[, b, drop = FALSE]

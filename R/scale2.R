@@ -30,3 +30,8 @@ scale2 <- function(A, center = TRUE, scale = TRUE, bias = TRUE) {
     return(A)
   }
 }
+
+
+scale2_ <- function(x, bias){
+  scale2(x, bias = bias) / sqrt(NCOL(x))
+}
