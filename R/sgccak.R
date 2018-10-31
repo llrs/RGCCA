@@ -138,7 +138,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
     }
   }
 
-  AVE_inner <- sum(C * cor(Y)^2 / 2) / (sum(C) / 2) # AVE inner model
+  AVE_inner <- ave_inner(C, Y)
 
   result <- list(
     Y = Y, a = a, crit = crit[which(crit != 0)],

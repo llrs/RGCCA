@@ -285,7 +285,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     plot(crit[seq_len(iter)], xlab = "iteration", ylab = "criteria")
   }
 
-  AVEinner <- sum(C * cor(Y)^2/2)/(sum(C)/2)
+  AVEinner <- ave_inner(C, Y)
   result <- list(Y = Y, a = a, crit = crit,
                  AVE_inner = AVEinner, C = C, tau = tau, scheme = scheme)
 

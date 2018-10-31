@@ -179,14 +179,14 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
     for (b in seq_len(J)) {
       Y[[b]] <- result$Y[, b, drop = FALSE]
       # Average Variance Explained (AVE) per block
-      AVE_X[[b]] <- mean(cor(A[[b]], Y[[b]])^2)
+      # AVE_X[[b]] <- mean(cor(A[[b]], Y[[b]])^2)
       rownames(a[[b]]) <- colnames(A[[b]])
       rownames(Y[[b]]) <- rownames(A[[b]])
       colnames(Y[[b]]) <- "comp1"
     }
-
-    # AVE outer
-    AVE_outer <- sum(pjs * unlist(AVE_X)) / sum(pjs)
+    # AVE
+    AVE_X <- ave_x(A, Y)
+    AVE_outer <- ave_outer(AVE_X, pjs)
 
     AVE <- list(
       AVE_X = AVE_X,

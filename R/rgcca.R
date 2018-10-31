@@ -195,12 +195,12 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
       Y[[b]] <- result$Y[, b, drop = FALSE]
 
       # Average Variance Explained (AVE) per block
-      AVE_X[[b]] <- mean(cor(A[[b]], Y[[b]])^2)
       rownames(a[[b]]) <- colnames(A[[b]])
       rownames(Y[[b]]) <- rownames(A[[b]])
       colnames(Y[[b]]) <- "comp1"
     }
-    # AVE outer
+    # AVE
+    AVE_X <- ave_x(A, Y)
     AVE_outer <- sum(pjs * unlist(AVE_X)) / sum(pjs)
 
     AVE <- list(
