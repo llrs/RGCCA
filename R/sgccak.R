@@ -47,7 +47,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
   # 	Apply the constraints of the general otpimization problem
   # 	and compute the outer components
   iter <- 1
-  crit <- numeric()
+  crit <- numeric(1000L)
   Y <- Z <- matrix(0, NROW(A[[1]]), J)
   for (q in seq_len(J)) {
     Y[, q] <- apply(A[[q]], 1, miscrossprod, a[[q]])
