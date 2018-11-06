@@ -265,7 +265,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
         }
       } else {
         for (b in seq_len(J)) {
-          astar[[b]][, n] <- rgcca.result$a[[b]] - astar[[b]][, (seq_len(n) - 1), drop = FALSE] %*% drop(t(a[[b]][, n]) %*% P[[b]][, 1:(n - 1), drop = FALSE])
+          astar[[b]][, n] <- rgcca.result$a[[b]] - astar[[b]][, (seq_len(n) - 1), drop = FALSE] %*% drop(crossprod(a[[b]][, n], P[[b]][, 1:(n - 1), drop = FALSE]))
         }
       }
     }
@@ -287,7 +287,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     for (b in seq_len(J)) {
       Y[[b]][, N + 1] <- rgcca.result$Y[, b]
       a[[b]][, N + 1] <- rgcca.result$a[[b]]
-      astar[[b]][, N + 1] <- rgcca.result$a[[b]] - astar[[b]][, (seq_len(N)), drop = FALSE] %*% drop(t(a[[b]][, (N + 1)]) %*% P[[b]][, 1:(N), drop = FALSE])
+      astar[[b]][, N + 1] <- rgcca.result$a[[b]] - astar[[b]][, (seq_len(N)), drop = FALSE] %*% drop(crossprod(a[[b]][, (N + 1)], P[[b]][, 1:(N), drop = FALSE]))
       rownames(a[[b]]) <- rownames(astar[[b]]) <- colnames(A[[b]])
       rownames(Y[[b]]) <- rownames(A[[b]])
       colnames(Y[[b]]) <- paste0("comp", seq_len(max(ncomp)))

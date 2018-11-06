@@ -256,7 +256,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
       }
     } else {
       for (b in seq_len(J)) {
-        astar[[b]][, n] <- sgcca.result$a[[b]] - astar[[b]][, (seq_len(n) - 1), drop = FALSE] %*% drop(t(a[[b]][, n]) %*% P[[b]][, seq_len(n - 1), drop = FALSE])
+        astar[[b]][, n] <- sgcca.result$a[[b]] - astar[[b]][, (seq_len(n) - 1), drop = FALSE] %*% drop(crossprod(a[[b]][, n], P[[b]][, seq_len(n - 1), drop = FALSE]))
       }
     }
   }
