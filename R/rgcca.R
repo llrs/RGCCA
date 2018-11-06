@@ -298,9 +298,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
 
     # AVE outer
     outer <- matrix(unlist(AVE_X), nrow = max(ncomp))
-    for (j in seq_len(max(ncomp))) {
-      AVE_outer[j] <- sum(pjs * outer[j, ]) / sum(pjs)
-    }
+    AVE_outer <- as.numeric((outer %*% pjs)/sum(pjs))
 
     Y <- shave.matlist(Y, ncomp)
     AVE_X <- shave.veclist(AVE_X, ncomp)
