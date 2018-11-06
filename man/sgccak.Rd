@@ -4,8 +4,9 @@
 \alias{sgccak}
 \title{Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)}
 \usage{
-sgccak(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FALSE,
-  tol = .Machine$double.eps, init = "svd", bias = TRUE, verbose = TRUE)
+sgccak(A, C, c1 = rep(1, length(A)), scheme = "centroid",
+  scale = FALSE, tol = .Machine$double.eps, init = "svd",
+  bias = TRUE, verbose = TRUE)
 }
 \arguments{
 \item{A}{A list that contains the \eqn{J} blocks of variables from which block components are constructed.
