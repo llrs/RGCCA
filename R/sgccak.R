@@ -50,7 +50,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
   crit <- numeric(1000L)
   Y <- Z <- matrix(0, NROW(A[[1]]), J)
   for (q in seq_len(J)) {
-    Y[, q] <- apply(A[[q]], 1, miscrossprod, a[[q]])
+    Y[, q] <- drop(A[[q]] %*% a[[q]])
     a[[q]] <- soft.threshold(a[[q]], const[q])
     a[[q]] <- as.vector(a[[q]]) / norm2(a[[q]])
   }
@@ -88,7 +88,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
       a[[q]] <- drop(crossprod(A[[q]], Z[, q, drop = FALSE]))
       a[[q]] <- soft.threshold(a[[q]], const[q])
       a[[q]] <- as.vector(a[[q]]) / norm2(a[[q]])
-      Y[, q] <- apply(A[[q]], 1, miscrossprod, a[[q]])
+      Y[, q] <- drop(A[[q]] %*% a[[q]])
     }
 
     # check for convergence of the SGCCA alogrithm to a solution of the stationnary equations
