@@ -83,9 +83,9 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
         }
       }
 
-    Z <- t(CbyCovq %*% t(Y))
+    Z <- t(tcrossprod(CbyCovq, Y))
     for (q in seq_len(J)) {
-      a[[q]] <- drop(t(A[[q]]) %*% Z[, q, drop = FALSE])
+      a[[q]] <- drop(crossprod(A[[q]], Z[, q, drop = FALSE]))
       a[[q]] <- soft.threshold(a[[q]], const[q])
       a[[q]] <- as.vector(a[[q]]) / norm2(a[[q]])
       Y[, q] <- drop(A[[q]] %*% a[[q]])
