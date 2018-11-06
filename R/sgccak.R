@@ -85,7 +85,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
       }
 
       Z[, q] <- rowSums(mapply("*", CbyCovq, as.data.frame(Y)))
-      a[[q]] <- apply(t(A[[q]]), 1, miscrossprod, Z[, q])
+      a[[q]] <- drop(crossprod(A[[q]], Z[, q, drop = FALSE]))
       a[[q]] <- soft.threshold(a[[q]], const[q])
       a[[q]] <- as.vector(a[[q]]) / norm2(a[[q]])
       Y[, q] <- apply(A[[q]], 1, miscrossprod, a[[q]])
