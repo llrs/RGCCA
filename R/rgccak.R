@@ -86,19 +86,19 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
       a[[j]] <- drop(1/sqrt(crossprod(a[[j]]))) * a[[j]]
     } else {
       M[[j]] <- ginv(tau[j] * diag(pjs[j]) + ((1 - tau[j])/(N)) * (crossprod(A[[j]])))
-      a[[j]] <- drop(1/sqrt(t(a[[j]]) %*% M[[j]] %*% a[[j]])) * M[[j]] %*% a[[j]]
+      a[[j]] <- drop(1/sqrt(crossprod(a[[j]], M[[j]] %*% a[[j]]))) * M[[j]] %*% a[[j]]
     }
     Y[, j] <- A[[j]] %*% a[[j]]
   }
   for (j in which.dual) {
     if(tau[j] == 1) {
-      alpha[[j]] = drop(1/sqrt(t(alpha[[j]])%*%K[[j]]%*% alpha[[j]]))*alpha[[j]]
+      alpha[[j]] = drop(1/sqrt(crossprod(alpha[[j]], K[[j]]%*% alpha[[j]])))*alpha[[j]]
     } else {
       M[[j]] = tau[j]*diag(n)+(1-tau[j])/(N)*K[[j]]
       Minv[[j]] = ginv(M[[j]])
-      alpha[[j]] = drop(1/sqrt(t(alpha[[j]]) %*% M[[j]]%*%K[[j]]%*% alpha[[j]]))*alpha[[j]]
+      alpha[[j]] = drop(1/sqrt(crossprod(alpha[[j]], M[[j]] %*% K[[j]] %*% alpha[[j]])))*alpha[[j]]
     }
-    a[[j]] = t(A[[j]])%*%alpha[[j]]
+    a[[j]] = crossprod(A[[j]], alpha[[j]])
     Y[, j] = A[[j]] %*% a[[j]]
 
   }
@@ -130,12 +130,12 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
         # assign(formalArgs(scheme), cov2(Y[, j], Y, bias = bias))
         # dgx = as.vector(attr(eval(dg), "grad"))
         Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * matrix(rep(dgx, n), n, J, byrow = TRUE) * Y)
-        precalc1 <- t(Z[, j]) %*% A[[j]]
-        precalc2 <- t(A[[j]]) %*% Z[, j]
+        precalc1 <- crossprod(Z[, j], A[[j]])
+        precalc2 <- crossprod(A[[j]],  Z[, j])
         if(tau[j]==1) {
-          a[[j]] = drop(1/sqrt(precalc1 %*% t(A[[j]]) %*% Z[, j])) * precalc2
+          a[[j]] = drop(1/sqrt(precalc1 %*% crossprod(A[[j]], Z[, j]))) * precalc2
         } else {
-          a[[j]] = drop(1/sqrt(precalc1 %*% M[[j]] %*% t(A[[j]]) %*% Z[, j])) * (M[[j]] %*% precalc2)
+          a[[j]] = drop(1/sqrt(precalc1 %*% M[[j]] %*% crossprod(A[[j]], Z[, j]))) * (M[[j]] %*% precalc2)
         }
         Y[, j] = A[[j]] %*% a[[j]]
       }
@@ -145,13 +145,13 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
         # assign(formalArgs(scheme), cov2(Y[, j], Y, bias = bias))
         # dgx = as.vector(attr(eval(dg), "grad"))
         Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * matrix(rep(dgx, n), n, J, byrow = TRUE) * Y)
-        precalc1 <- t(Z[, j]) %*% K[[j]]
+        precalc1 <- crossprod(Z[, j], K[[j]])
         if(tau[j]==1) {
           alpha[[j]] = drop(1/sqrt(precalc1 %*% Z[, j])) * Z[, j]
         } else {
           alpha[[j]] = drop(1/sqrt(precalc1 %*% Minv[[j]] %*% Z[, j])) * (Minv[[j]] %*% Z[, j])
         }
-        a[[j]] = t(A[[j]])%*% alpha[[j]]
+        a[[j]] = crossprod(A[[j]], alpha[[j]])
         Y[, j] = A[[j]] %*% a[[j]]
       }
     } else {
@@ -162,8 +162,8 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
         for (j in which.primal) {
           Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * Y)
-          precalc1 <- t(Z[, j]) %*% A[[j]]
-          precalc2 <- t(A[[j]]) %*% Z[, j]
+          precalc1 <- crossprod(Z[, j], A[[j]])
+          precalc2 <- crossprod(A[[j]], Z[, j])
 
           if (tau[j]==1) {
             a[[j]] = drop(1/sqrt(precalc1 %*% precalc2)) * precalc2
@@ -177,13 +177,13 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
         for (j in which.dual) {
           Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * Y)
-          precalc1 <- t(Z[, j]) %*% K[[j]]
+          precalc1 <- crossprod(Z[, j], K[[j]])
           if(tau[j]==1) {
             alpha[[j]] = drop(1/sqrt(precalc1 %*% Z[, j]))* Z[, j]
           } else {
             alpha[[j]] = drop(1/sqrt(precalc1 %*% Minv[[j]] %*% Z[, j]))*(Minv[[j]] %*% Z[, j])
           }
-          a[[j]] = t(A[[j]])%*% alpha[[j]]
+          a[[j]] = crossprod(A[[j]], alpha[[j]])
           Y[, j] = A[[j]] %*% a[[j]]
         }
       }
@@ -196,12 +196,12 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
         for (j in which.primal){
           Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * matrix(rep(cov2(Y[, j], Y, bias = bias), n), n, J, byrow = TRUE) * Y)
-          precalc1 <- t(Z[, j]) %*% A[[j]]
-          precalc2 <- t(A[[j]]) %*% Z[, j]
+          precalc1 <- crossprod(Z[, j],  A[[j]])
+          precalc2 <- crossprod(A[[j]], Z[, j])
           if(tau[j]==1) {
-            a[[j]] = drop(1/sqrt(precalc1 %*% t(A[[j]]) %*% Z[, j])) * precalc2
+            a[[j]] = drop(1/sqrt(precalc1 %*% crossprod(A[[j]],  Z[, j]))) * precalc2
           } else {
-            a[[j]] = drop(1/sqrt(precalc1 %*% M[[j]] %*% t(A[[j]]) %*% Z[, j])) * (M[[j]] %*% precalc2)
+            a[[j]] = drop(1/sqrt(precalc1 %*% M[[j]] %*% crossprod(A[[j]], Z[, j]))) * (M[[j]] %*% precalc2)
           }
           Y[, j] = A[[j]] %*% a[[j]]
         }
@@ -213,7 +213,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
           } else {
             alpha[[j]] = drop(1/sqrt(t(Z[, j]) %*% K[[j]] %*% Minv[[j]] %*% Z[, j])) * (Minv[[j]] %*% Z[, j])
           }
-          a[[j]] = t(A[[j]])%*% alpha[[j]]
+          a[[j]] = crossprod(A[[j]], alpha[[j]])
           Y[, j] = A[[j]] %*% a[[j]]
         }
       }
@@ -225,25 +225,25 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
       if (scheme == "centroid") {
         for (j in which.primal) {
           Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * sign(matrix(rep(cov2(Y[, j], Y, bias = bias), n), n, J, byrow = TRUE)) * Y)
-          precalc1 <- t(Z[, j]) %*% A[[j]]
-          precalc2 <- t(A[[j]]) %*% Z[, j]
+          precalc1 <- crossprod(Z[, j], A[[j]])
+          precalc2 <- crossprod(A[[j]], Z[, j])
           if(tau[j]==1) {
-            a[[j]] = drop(1/sqrt(precalc1 %*% t(A[[j]]) %*% Z[, j])) * precalc2
+            a[[j]] = drop(1/sqrt(precalc1 %*% crossprod(A[[j]], Z[, j]))) * precalc2
           } else {
-            a[[j]] = drop(1/sqrt(precalc1 %*% M[[j]] %*% t(A[[j]]) %*% Z[, j])) * (M[[j]] %*% precalc2)
+            a[[j]] = drop(1/sqrt(precalc1 %*% M[[j]] %*% crossprod(A[[j]], Z[, j]))) * (M[[j]] %*% precalc2)
           }
           Y[, j] = A[[j]] %*% a[[j]]
         }
 
         for (j in which.dual) {
           Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * sign(matrix(rep(cov2(Y[, j], Y, bias = bias), n), n, J, byrow = TRUE)) * Y)
-          precalc1 <- t(Z[, j]) %*% K[[j]]
+          precalc1 <- crossprod(Z[, j], K[[j]])
           if(tau[j]==1) {
             alpha[[j]] = drop(1/sqrt(precalc1 %*% Z[, j])) * Z[, j]
           } else {
             alpha[[j]] = drop(1/sqrt(precalc1 %*% Minv[[j]] %*% Z[, j])) * (Minv[[j]] %*% Z[, j])
           }
-          a[[j]] = t(A[[j]])%*% alpha[[j]]
+          a[[j]] = crossprod(A[[j]], alpha[[j]])
           Y[, j] = A[[j]] %*% a[[j]]
         }
       }
