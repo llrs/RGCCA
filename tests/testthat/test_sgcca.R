@@ -20,6 +20,7 @@ test_that("centroid", {
   expect_length(result.sgcca$crit, 2L)
 
   expect_equal(sum(result.sgcca$a[[1]] != 0), 296L)
+  expect_equal(result.sgcca$a[[1]][261, ], c(-0.309282475578372, 0))
   expect_equal(sum(result.sgcca$a[[2]] != 0), 161L)
   expect_equal(sum(result.sgcca$a[[3]] != 0), 3L)
 
