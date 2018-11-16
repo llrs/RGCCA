@@ -69,17 +69,18 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
     dg <- Deriv::Deriv(scheme, env = parent.frame())
   }
 
-  repeat {
+  repeat{
+    for (q in seq_len(J)) {
       if (mode(scheme) == "function") {
-        dgx <- dg(cov2(Y, Y, bias = bias))
-        CbyCovq <- C * dgx
+        dgx <- dg(cov2(Y, Y[, q], bias = bias))
+        CbyCovq <- C[q, ] * dgx
       } else {
         if (scheme == "horst") {
-          CbyCovq <- C
+          CbyCovq <- C[q, ]
         } else if (scheme == "factorial") {
-          CbyCovq <- C * cov2(Y, Y, bias = bias)
+          CbyCovq <- C[q, ] * 2 * cov2(Y, Y[, q], bias = bias)
         } else if (scheme == "centroid") {
-          CbyCovq <- C * sign(cov2(Y, Y, bias = bias))
+          CbyCovq <- C[q, ] * sign(cov2(Y, Y[, q], bias = bias))
         }
       }
 
