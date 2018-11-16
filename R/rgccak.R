@@ -209,9 +209,9 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
         for (j in which.dual) {
           Z[, j] = rowSums(matrix(rep(C[j, ], n), n, J, byrow = TRUE) * matrix(rep(cov2(Y[, j], Y, bias = bias), n), n, J, byrow = TRUE) * Y)
           if(tau[j]==1) {
-            alpha[[j]] = drop(1/sqrt(t(Z[, j]) %*% K[[j]] %*% Z[, j])) * Z[, j]
+            alpha[[j]] = drop(1/sqrt(crossprod(Z[, j], K[[j]]) %*% Z[, j])) * Z[, j]
           } else {
-            alpha[[j]] = drop(1/sqrt(t(Z[, j]) %*% K[[j]] %*% Minv[[j]] %*% Z[, j])) * (Minv[[j]] %*% Z[, j])
+            alpha[[j]] = drop(1/sqrt(crossprod(Z[, j], K[[j]]) %*% Minv[[j]] %*% Z[, j])) * (Minv[[j]] %*% Z[, j])
           }
           a[[j]] = crossprod(A[[j]], alpha[[j]])
           Y[, j] = A[[j]] %*% a[[j]]
