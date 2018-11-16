@@ -24,7 +24,7 @@ test_that("centroid", {
   expect_equal(sum(result.sgcca$a[[2]] != 0), 161L)
   expect_equal(sum(result.sgcca$a[[3]] != 0), 3L)
 
-  expect_length(result.sgcca$crit[[2]], 25L)
+  expect_length(result.sgcca$crit[[2]], 16L)
   expect_equal(result.sgcca$scheme, "centroid")
   expect_equal(result.sgcca$AVE$AVE_inner, c(0.609213197536486, 0.45712854179023))
   expect_equal(result.sgcca$AVE$AVE_outer, c(0.0691671029653102, 0.0425623110059463))
@@ -83,7 +83,7 @@ test_that("horst", {
   expect_equal(result.sgcca$C, C)
   expect_equal(result.sgcca$ncomp, c(2L, 2L, 1L))
   expect_length(result.sgcca$crit, 2L)
-  expect_length(result.sgcca$crit[[2]], 45)
+  expect_length(result.sgcca$crit[[2]], 16L)
   expect_equal(result.sgcca$scheme, "horst")
   expect_equal(result.sgcca$AVE$AVE_inner, c(0.609213197536486, 0.45712854179023))
   expect_equal(result.sgcca$AVE$AVE_outer, c(0.0691671029653102, 0.0425623110059463))
@@ -142,7 +142,7 @@ test_that("factorial", {
   expect_equal(sum(result.sgcca$a[[2]] != 0), 156L)
   expect_equal(sum(result.sgcca$a[[3]] != 0), 3L)
 
-  expect_length(result.sgcca$crit[[2]], 29)
+  expect_length(result.sgcca$crit[[2]], 17L)
   expect_equal(result.sgcca$scheme, "factorial")
   expect_equal(result.sgcca$AVE$AVE_inner, c(0.597889877456015, 0.437202629644858))
   expect_equal(result.sgcca$AVE$AVE_outer, c(0.0691408017211274, 0.0433081948939905))
