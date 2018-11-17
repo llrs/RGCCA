@@ -38,6 +38,45 @@ test_that("Example 1:factorial", {
 })
 
 
+test_that("Example 1: factorial & optimal tau", {
+  data(Russett)
+  set.seed(45791)
+  X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
+  X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
+  X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
+  A <- list(X_agric, X_ind, X_polit)
+  # Define the design matrix (output = C)
+  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
+  result.rgcca <- rgcca(A, C,
+                        tau = "optimal", scheme = "factorial",
+                        scale = TRUE, verbose = FALSE
+  )
+
+  expect_equal(result.rgcca$C, C)
+  expect_equal(result.rgcca$tau, c(0.088532161155743, 0.0270325565573325, 0.0322463768115942))
+  expect_equal(result.rgcca$ncomp, c(1L, 1L, 1L))
+  expect_length(result.rgcca$crit, 5L)
+  expect_equal(result.rgcca$scheme, "factorial")
+  expect_equal(result.rgcca$AVE$AVE_inner, 0.445439550988771)
+  expect_equal(result.rgcca$AVE$AVE_outer, 0.669136916746552)
+  expect_length(result.rgcca$AVE, 3)
+
+  expect_length(result.rgcca$Y, 3)
+  expect_length(result.rgcca$a, 3)
+
+  expect_true(is(result.rgcca$a[[1]], "matrix"))
+  expect_true(is(result.rgcca$a[[2]], "matrix"))
+  expect_true(is(result.rgcca$a[[3]], "matrix"))
+
+  expect_true(is(result.rgcca$Y[[1]], "matrix"))
+  expect_true(is(result.rgcca$Y[[2]], "matrix"))
+  expect_true(is(result.rgcca$Y[[3]], "matrix"))
+
+  expect_equal(dim(result.rgcca$a[[1]]), c(3L, 1L))
+})
+
+
+
 test_that("Example 2: function", {
   data(Russett)
   set.seed(45791)
