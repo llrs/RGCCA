@@ -81,7 +81,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
     dg <- Deriv::Deriv(scheme, env = parent.frame())
   }
 
-  repeat{
+  repeat {
     for (q in seq_len(J)) {
       if (mode(scheme) == "function") {
         dgx <- dg(cov2(Y, Y[, q], bias = bias))
