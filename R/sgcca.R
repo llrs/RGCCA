@@ -118,6 +118,13 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   N <- max(ndefl)
   J <- length(A)
 
+  if (!correct(C)) {
+    stop("Design matrix should be symmetric and connected")
+  }
+  if (ncol(C) != J) {
+    stop("Design matrix should match the number of blocks provided")
+  }
+
   if (J < 2) {
     stop("Provide a list of several sets of variables")
   }

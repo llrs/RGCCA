@@ -177,6 +177,14 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     }
   }
   J <- length(A)
+
+  if (!correct(C)) {
+    stop("Design matrix should be symmetric and connected")
+  }
+  if (ncol(C) != J) {
+    stop("Design matrix should match the number of blocks provided")
+  }
+
   AVE_X <- vector("list", length = J)
   AVE_outer <- vector()
   ndefl <- ncomp - 1

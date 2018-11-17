@@ -41,6 +41,13 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   pjs <- vapply(A,NCOL, numeric(1L))
   Y <- matrix(0, n, J)
 
+  if (!correct(C)) {
+    stop("Design matrix should be symmetric and connected")
+  }
+  if (ncol(C) != J) {
+    stop("Design matrix should match the number of blocks provided")
+  }
+
   #if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
   if (!is.numeric(tau)) {
     tau = vapply(A, tau.estimate, numeric(1L))

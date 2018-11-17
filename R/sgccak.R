@@ -28,6 +28,13 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
                    tol = .Machine$double.eps, init="svd", bias = TRUE, verbose = TRUE) {
   J <- length(A)
   pjs <- vapply(A, NCOL, numeric(1L))
+
+  if (!correct(C)) {
+    stop("Design matrix should be symmetric and connected")
+  }
+  if (ncol(C) != J) {
+    stop("Design matrix should match the number of blocks provided")
+  }
   # Data standardization
   # if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
   #  Choose J arbitrary vectors
