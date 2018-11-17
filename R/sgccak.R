@@ -35,6 +35,11 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FA
   if (ncol(C) != J) {
     stop("Design matrix should match the number of blocks provided")
   }
+
+  if (length(c1) != length(A)) {
+    stop("The shrinkage parameters should be of the same length as the input data")
+  }
+
   # Data standardization
   # if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
   #  Choose J arbitrary vectors

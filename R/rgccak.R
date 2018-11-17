@@ -48,6 +48,10 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     stop("Design matrix should match the number of blocks provided")
   }
 
+  if (length(tau) != length(A)) {
+    stop("The shrinkage parameters should be of the same length as the input data")
+  }
+
   #if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
   if (!is.numeric(tau)) {
     tau = vapply(A, tau.estimate, numeric(1L))

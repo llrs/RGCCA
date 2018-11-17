@@ -128,6 +128,11 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   if (J < 2) {
     stop("Provide a list of several sets of variables")
   }
+
+  if (length(c1) != length(A)) {
+    stop("The shrinkage parameters should be of the same length as the input data")
+  }
+
   pjs <- vapply(A, NCOL, numeric(1L))
   nb_ind <- NROW(A[[1]])
   AVE_X <- list()
