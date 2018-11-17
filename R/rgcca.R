@@ -149,8 +149,9 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     stop("For each block, choose a number of components smaller than the number of variables!")
   }
 
-  if (length(tau) != length(A)) {
-    stop("The shrinkage parameters should be of the same length as the input data")
+  if (length(tau) != length(A) && tau != "optimal") {
+    stop("The shrinkage parameters should be of the same length as the input",
+         "data, or 'optimal'")
   }
   if (length(ncomp) != length(A) && all(ncomp >= 1)) {
     stop("The ncomp parameter should be of the same length as the input data")
