@@ -177,3 +177,21 @@ test_that("factorial", {
 
   expect_equal(dim(result.sgcca$a[[1]]), c(15702L, 2L))
 })
+
+
+test_that("errors solved", {
+  skip_on_travis()
+  data("ge_cgh_locIGR", package = "gliomaData")
+  A <- ge_cgh_locIGR$multiblocks
+  Loc <- factor(ge_cgh_locIGR$y)
+  levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
+  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
+  tau <- c(1, 1, 0)
+  shrinkage <- c(.071, .2, 1)
+  ncomp <- c(2, 2)
+  expect_error(sgcca(A, C = C, c1 = shrinkage, ncomp = ncomp),
+               "The ncomp parameter should be ")
+  C[1, 3] <- 0
+  expect_error(sgcca(A, C = C, c1 = shrinkage, ncomp = ncomp),
+               "symmetric and connected")
+})

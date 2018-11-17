@@ -152,6 +152,9 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
   if (length(tau) != length(A)) {
     stop("The shrinkage parameters should be of the same length as the input data")
   }
+  if (length(ncomp) != length(A) && all(ncomp >= 1)) {
+    stop("The ncomp parameter should be of the same length as the input data")
+  }
   #-------------------------------------------------------
   if (mode(scheme) != "function") {
     if ((scheme != "horst") & (scheme != "factorial") & (scheme != "centroid")) {
