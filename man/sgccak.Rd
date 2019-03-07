@@ -5,8 +5,8 @@
 \title{Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)}
 \usage{
 sgccak(A, C, c1 = rep(1, length(A)), scheme = "centroid",
-  scale = FALSE, tol = .Machine$double.eps, init = "svd",
-  bias = TRUE, verbose = TRUE)
+  tol = .Machine$double.eps, init = "svd", bias = TRUE,
+  verbose = TRUE)
 }
 \arguments{
 \item{A}{A list that contains the \eqn{J} blocks of variables from which block components are constructed.
@@ -19,8 +19,6 @@ It could be eiher the original matrices (\eqn{X_1, X_2, ..., X_J}) or the residu
 with \eqn{p_j} the number of variables of \eqn{X_j} and with c1[j] between 0 and 1 (larger L1 bound corresponds to less penalization).}
 
 \item{scheme}{Either "horst", "factorial" or "centroid" (default: centroid).}
-
-\item{scale}{If scale = TRUE, each block is standardized to zero means and unit variances (default: TRUE).}
 
 \item{tol}{Stopping value for convergence.}
 

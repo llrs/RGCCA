@@ -8,7 +8,6 @@
 #' \deqn{ \|a_{j}\|_{\ell_1} \leq c_1[j] \sqrt{p_j}.}
 #' with \eqn{p_j} the number of variables of \eqn{X_j} and with c1[j] between 0 and 1 (larger L1 bound corresponds to less penalization).
 #' @param scheme  Either "horst", "factorial" or "centroid" (default: centroid).
-#' @param scale  If scale = TRUE, each block is standardized to zero means and unit variances (default: TRUE).
 #' @param init Mode of initialization of the SGCCA algorithm. Either by Singular Value Decompostion ("svd") or random ("random") (default: "svd").
 #' @param bias Logical value for biaised (\eqn{1/n}) or unbiaised (\eqn{1/(n-1)}) estimator of the var/cov.
 #' @param verbose  Reports progress while computing, if verbose = TRUE (default: TRUE).
@@ -24,8 +23,9 @@
 #' @title Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)
 #' @importFrom Deriv Deriv
 #' @export sgccak
-sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid", scale = FALSE,
-                   tol = .Machine$double.eps, init="svd", bias = TRUE, verbose = TRUE) {
+sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
+                   tol = .Machine$double.eps, init="svd", bias = TRUE,
+                   verbose = TRUE) {
   J <- length(A)
   pjs <- vapply(A, NCOL, numeric(1L))
 
