@@ -303,8 +303,8 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   outer <- matrix(unlist(AVE_X), nrow = max(ncomp))
   AVE_outer <- as.numeric((outer %*% pjs)/sum(pjs))
 
-  Y <- shave.matlist(Y, ncomp)
-  AVE_X <- shave.veclist(AVE_X, ncomp)
+  Y <- shave(Y, ncomp)
+  AVE_X <- shave(AVE_X, ncomp)
 
   AVE <- list(
     AVE_X = AVE_X,
@@ -313,9 +313,9 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   )
 
   out <- list(
-    Y = shave.matlist(Y, ncomp),
-    a = shave.matlist(a, ncomp),
-    astar = shave.matlist(astar, ncomp),
+    Y = shave(Y, ncomp),
+    a = shave(a, ncomp),
+    astar = shave(astar, ncomp),
     C = C, c1 = c1, scheme = scheme,
     ncomp = ncomp, crit = crit,
     AVE = AVE

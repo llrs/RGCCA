@@ -316,8 +316,8 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     outer <- matrix(unlist(AVE_X), nrow = max(ncomp))
     AVE_outer <- as.numeric((outer %*% pjs)/sum(pjs))
 
-    Y <- shave.matlist(Y, ncomp)
-    AVE_X <- shave.veclist(AVE_X, ncomp)
+    Y <- shave(Y, ncomp)
+    AVE_X <- shave(AVE_X, ncomp)
 
     AVE <- list(
       AVE_X = AVE_X,
@@ -326,9 +326,9 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     )
 
     out <- list(
-      Y = shave.matlist(Y, ncomp),
-      a = shave.matlist(a, ncomp),
-      astar = shave.matlist(astar, ncomp),
+      Y = shave(Y, ncomp),
+      a = shave(a, ncomp),
+      astar = shave(astar, ncomp),
       C = C, tau = tau_mat,
       scheme = scheme, ncomp = ncomp, crit = crit,
       primal_dual = primal_dual,
