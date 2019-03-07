@@ -244,9 +244,11 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
       message("Computation of the SGCCA block components #", n, " is under progress...")
     }
     if (is.vector(c1)) {
-      sgcca.result <- sgccak(R, C, c1 = c1, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+      sgcca.result <- sgccak(R, C, c1 = c1, scheme = scheme, init = init,
+                             bias = bias, tol = tol, verbose = verbose)
     } else {
-      sgcca.result <- sgccak(R, C, c1 = c1[n, ], scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+      sgcca.result <- sgccak(R, C, c1 = c1[n, ], scheme = scheme, init = init,
+                             bias = bias, tol = tol, verbose = verbose)
     }
     AVE_inner[n] <- sgcca.result$AVE_inner
     crit[[n]] <- sgcca.result$crit
@@ -280,9 +282,11 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
     message("Computation of the SGCCA block components #", N + 1, " is under progress...")
   }
   if (is.vector(c1)) {
-    sgcca.result <- sgccak(R, C, c1 = c1, scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+    sgcca.result <- sgccak(R, C, c1 = c1, scheme = scheme, init = init,
+                           bias = bias, tol = tol, verbose = verbose)
   } else {
-    sgcca.result <- sgccak(R, C, c1 = c1[N + 1, ], scheme = scheme, init = init, bias = bias, tol = tol, verbose = verbose)
+    sgcca.result <- sgccak(R, C, c1 = c1[N + 1, ], scheme = scheme, init = init,
+                           bias = bias, tol = tol, verbose = verbose)
   }
   AVE_inner[max(ncomp)] <- sgcca.result$AVE_inner
 
