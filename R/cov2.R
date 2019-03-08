@@ -18,7 +18,7 @@ cov2 <- function(x, y = NULL, bias = TRUE) {
       C <- ((n - 1) / n) * cov(x, use = "pairwise.complete.obs")
     }
     else {
-      C <- cov(x, use = "pairwise.complete.obs")
+      suppressWarnings({C <- cov(x, use = "pairwise.complete.obs")})
     }
   }
 
@@ -27,7 +27,7 @@ cov2 <- function(x, y = NULL, bias = TRUE) {
       C <- ((n - 1) / n) * cov(x, y, use = "pairwise.complete.obs")
     }
     else {
-      C <- cov(x, y, use = "pairwise.complete.obs")
+      suppressWarnings({C <- cov(x, y, use = "pairwise.complete.obs")})
     }
   }
   return(C)

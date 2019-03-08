@@ -1,9 +1,9 @@
 ave_inner <- function(C, Y) {
-  sum(C * cor(Y)^2/2)/(sum(C)/2)
+  suppressWarnings({sum(C * cor(Y)^2/2, na.rm = TRUE)/(sum(C)/2)})
 }
 
 ave_outer <- function(AVE_X, pjs) {
-  sum(pjs * unlist(AVE_X)) / sum(pjs)
+  sum(pjs * unlist(AVE_X)) / sum(pjs, na.rm = TRUE)
 }
 
 

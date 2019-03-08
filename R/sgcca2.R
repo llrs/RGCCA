@@ -206,9 +206,14 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
     crit[[n]] <- sgcca.result$crit
 
     defla.result <- defl.select(sgcca.result$Y, R, ndefl, n, nbloc = J)
-    R <- defla.result$resdefl
+    remove <- rowSums(C[[n]]) == 0
+    R[!remove] <- defla.result$resdefl[!remove]
 
     for (b in seq_len(J)) {
+      if (remove[b]) {
+        next
+      }
+
       Y[[b]][, n] <- sgcca.result$Y[, b]
       P[[b]][, n] <- defla.result$pdefl[[b]]
       a[[b]][, n] <- sgcca.result$a[[b]]
@@ -221,10 +226,16 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
 
     if (n == 1) {
       for (b in seq_len(J)) {
+        if (remove[b]) {
+          next
+        }
         astar[[b]][, n] <- sgcca.result$a[[b]]
       }
     } else {
       for (b in seq_len(J)) {
+        if (remove[b]) {
+          next
+        }
         astar[[b]][, n] <- sgcca.result$a[[b]] - astar[[b]][, (seq_len(n) - 1), drop = FALSE] %*% drop(crossprod(a[[b]][, n], P[[b]][, seq_len(n - 1), drop = FALSE]))
       }
     }
@@ -242,9 +253,13 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
                            verbose = verbose)
   }
   AVE_inner[max(ncomp)] <- sgcca.result$AVE_inner
-
+  remove <- rowSums(C[[N + 1]]) == 0
   crit[[N + 1]] <- sgcca.result$crit
+
   for (b in seq_len(J)) {
+    if (remove[b]) {
+      next
+    }
     Y[[b]][, N + 1] <- sgcca.result$Y[, b]
     a[[b]][, N + 1] <- sgcca.result$a[[b]]
     astar[[b]][, N + 1] <- sgcca.result$a[[b]] - astar[[b]][, (seq_len(N)), drop = FALSE] %*% drop(crossprod(a[[b]][, (N + 1)], P[[b]][, seq_len(N), drop = FALSE]))
@@ -253,15 +268,17 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
     colnames(Y[[b]]) <- paste0("comp", seq_len(max(ncomp)))
 
     # Average Variance Explained (AVE) per block
-    AVE_X[[b]] <- apply(cor(A[[b]], Y[[b]])^2, 2, mean)
+    ave_X <- apply(cor(A[[b]], Y[[b]])^2, 2, mean)
+    ave_X[is.na(ave_X)] <- 0
+    AVE_X[[b]] <- ave_X
   }
 
   # AVE outer
   outer <- matrix(unlist(AVE_X), nrow = max(ncomp))
   AVE_outer <- as.numeric((outer %*% pjs)/sum(pjs))
-
-  Y <- shave(Y, ncomp)
-  AVE_X <- shave(AVE_X, ncomp)
+  if (!is.unsorted(AVE_outer)) {
+    warning("First dimension explains less variability than the second one.")
+  }
 
   AVE <- list(
     AVE_X = AVE_X,
@@ -270,9 +287,9 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
   )
 
   out <- list(
-    Y = shave(Y, ncomp),
-    a = shave(a, ncomp),
-    astar = shave(astar, ncomp),
+    Y = Y,
+    a = a,
+    astar = astar,
     C = C, c1 = c1, scheme = scheme,
     ncomp = ncomp, crit = crit,
     AVE = AVE

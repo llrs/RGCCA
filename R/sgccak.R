@@ -29,11 +29,12 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   J <- length(A)
   pjs <- vapply(A, NCOL, numeric(1L))
 
-  if (!correct(C)) {
-    stop("Design matrix should be symmetric and connected")
-  }
   if (ncol(C) != J) {
     stop("Design matrix should match the number of blocks provided")
+  }
+  remove <- rowSums(C) == 0
+  if (!correct(C) & !any(remove)) {
+    stop("Design matrix should be symmetric and connected")
   }
 
   if (length(c1) != length(A)) {
@@ -51,6 +52,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   } else {
     stop("init should be either random or svd.")
   }
+
   if (any(c1 < 1 / sqrt(pjs) | c1 > 1)) {
     stop("L1 constraints must vary between 1/sqrt(p_j) and 1.")
   }
@@ -62,6 +64,9 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   crit <- numeric(1000L)
   Y <- Z <- matrix(0, NROW(A[[1]]), J)
   for (q in seq_len(J)) {
+    if (remove[q]) {
+      next
+    }
     Y[, q] <- drop(A[[q]] %*% a[[q]])
     a[[q]] <- soft.threshold(a[[q]], const[q])
     a[[q]] <- as.vector(a[[q]]) / norm2(a[[q]])
@@ -83,6 +88,11 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
 
   repeat {
     for (q in seq_len(J)) {
+
+      if (remove[q]) {
+        next
+      }
+
       if (mode(scheme) == "function") {
         dgx <- dg(cov2(Y, Y[, q], bias = bias))
         CbyCovq <- C[q, ] * dgx
