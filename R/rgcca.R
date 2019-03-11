@@ -316,11 +316,8 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     outer <- matrix(unlist(AVE_X), nrow = max(ncomp))
     AVE_outer <- as.numeric((outer %*% pjs)/sum(pjs))
 
-    Y <- shave(Y, ncomp)
-    AVE_X <- shave(AVE_X, ncomp)
-
     AVE <- list(
-      AVE_X = AVE_X,
+      AVE_X = shave(AVE_X, ncomp),
       AVE_outer_model = AVE_outer,
       AVE_inner_model = AVE_inner
     )
