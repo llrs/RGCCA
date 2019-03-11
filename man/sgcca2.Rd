@@ -97,7 +97,7 @@ plot(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[2]][, 1], col = "white", xlab = "
 text(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[2]][, 1], Loc, col = as.numeric(Loc), cex = .6)
 
 plot(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[1]][, 2], col = "white", xlab = "Y1 (GE)",
-     ylab = "Y2 (GE)", main = "Factorial plan of SGCCA")
+     ylab = "Y2 (GE) Dim 2.", main = "Factorial plan of SGCCA")
 text(result.sgcca$Y[[1]][, 1], result.sgcca$Y[[1]][, 2], Loc, col = as.numeric(Loc), cex = .6)
 
 # sgcca algorithm with multiple components and different L1 penalties for each components
