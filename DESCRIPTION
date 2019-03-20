@@ -16,7 +16,8 @@ Description: Multiblock data analysis concerns the analysis of
 License: GPL (>= 2)
 Imports: 
     Deriv,
-    MASS
+    MASS,
+    WGCNA
 Suggests: 
     covr,
     ggplot2,
