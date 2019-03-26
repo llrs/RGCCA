@@ -30,20 +30,21 @@ tau.estimate <- function(x) {
 }
 
 
-
 scale_col <- function(x) {
   if (!is.matrix(x)) {
     x <- as.matrix(x)
   }
   nc <- ncol(x)
-  f <- function(v) {
-    v <- v[!is.na(v)]
-    sqrt(sum(v^2)/max(1, length(v) - 1L))
+  n <- nrow(x) - 1
+  # Sd but taking advantage of :
+  # That it doesn't have NAs
+  # That we know the number of samples
+  f <- function(v, n) {
+    sqrt(sum(v^2)/n)
   }
-
   for (i in seq_along(nc)) {
-    centered <- x[, i] - mean(x[, i], na.rm = TRUE)
-    x[, i] <- centered/f(centered)
+    centered <- x[, i] - mean(x[, i])
+    x[, i] <- centered/f(centered, n)
   }
   x
 }
