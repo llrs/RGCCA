@@ -8,13 +8,19 @@
 #' @export tau.estimate
 #' @importFrom WGCNA cor
 #' @importFrom rfunctions crossprodcpp
+#' @examples
+#' n.obs <- 1e5
+#' n.vars <- 150
+#' x <- matrix(rnorm(n.obs * n.vars), n.obs, n.vars)
+#' tau <- tau.estimate(x)
+#' tau
 tau.estimate <- function(x) {
   if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
     stop("The data matrix must be numeric!")
   }
   n <- NROW(x)
   corm <- WGCNA::cor(x)
-  xs <- scale(x, center = TRUE, scale = TRUE)
+  xs <- scale_col(x)
   v <- (n / ((n - 1)^3)) * (rfunctions::crossprodcpp(xs^2) - 1 / n * (rfunctions::crossprodcpp(xs))^2)
   diag(v) <- 0
   I <- diag(NCOL(x))
@@ -22,3 +28,23 @@ tau.estimate <- function(x) {
   tau <- (sum(v)) / sum(d)
   max(min(tau, 1), 0)
 }
+
+
+
+scale_col <- function(x) {
+  if (!is.matrix(x)) {
+    x <- as.matrix(x)
+  }
+  nc <- ncol(x)
+  f <- function(v) {
+    v <- v[!is.na(v)]
+    sqrt(sum(v^2)/max(1, length(v) - 1L))
+  }
+
+  for (i in seq_along(nc)) {
+    centered <- x[, i] - mean(x[, i], na.rm = TRUE)
+    x[, i] <- centered/f(centered)
+  }
+  x
+}
+

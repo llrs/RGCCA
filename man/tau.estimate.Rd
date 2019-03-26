@@ -16,6 +16,13 @@ tau.estimate(x)
 Estimation of the optimal shrinkage parameters as described in [1,2] and implemented
 in a more general version within the SHIP package [2].
 }
+\examples{
+n.obs <- 1e5
+n.vars <- 150
+x <- matrix(rnorm(n.obs * n.vars), n.obs, n.vars)
+tau <- tau.estimate(x)
+tau
+}
 \references{
 [1] Schaefer J. and Strimmer K., 2005. A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statist. Appl. Genet. Mol. Biol. 4:32.
 
