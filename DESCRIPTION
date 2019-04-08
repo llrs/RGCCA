@@ -18,8 +18,6 @@ Imports:
     Deriv,
     MASS,
     WGCNA
-Remotes:
-    jaredhuling/rfunctions
 Suggests: 
     covr,
     ggplot2,
@@ -30,7 +28,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
-    llrs/gliomaData
+    llrs/gliomaData,
+    jaredhuling/rfunctions
 Encoding: UTF-8
 NeedsCompilation: no
 RoxygenNote: 6.1.1
