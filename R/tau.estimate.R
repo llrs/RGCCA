@@ -6,7 +6,7 @@
 #' @references [1] Schaefer J. and Strimmer K., 2005. A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statist. Appl. Genet. Mol. Biol. 4:32.
 #' @references [2] Jelizarow M., Guillemot V., Tenenhaus A., Strimmer K., Boulesteix A.-L., 2010. Over-optimism in bioinformatics: an illustration. Bioinformatics 26:1990-1998.
 #' @export tau.estimate
-#' @importFrom WGCNA cor
+# @importFrom WGCNA cor
 #' @importFrom rfunctions crossprodcpp
 #' @examples
 #' n.obs <- 1e5
@@ -19,9 +19,9 @@ tau.estimate <- function(x) {
     stop("The data matrix must be numeric!")
   }
   n <- NROW(x)
-  corm <- WGCNA::cor(x)
+  corm <- cor(x)
   xs <- scale_col(x)
-  v <- (n / ((n - 1)^3)) * (rfunctions::crossprodcpp(xs^2) - 1 / n * (rfunctions::crossprodcpp(xs))^2)
+  v <- (n / ((n - 1)^3)) * (crossprod(xs^2) - 1 / n * (crossprod(xs))^2)
   diag(v) <- 0
   I <- diag(NCOL(x))
   d <- (corm - I)^2
@@ -36,16 +36,16 @@ scale_col <- function(x) {
   }
   nc <- ncol(x)
   n <- nrow(x) - 1
-  # Sd but taking advantage of :
-  # That it doesn't have NAs
-  # That we know the number of samples
-  f <- function(v, n) {
-    sqrt(sum(v^2)/n)
-  }
   for (i in seq_along(nc)) {
     centered <- x[, i] - mean(x[, i])
-    x[, i] <- centered/f(centered, n)
+    x[, i] <- centered/sd_helper(centered, n)
   }
   x
 }
 
+# Sd but taking advantage of :
+# That it doesn't have NAs
+# That we know the number of samples
+sd_helper <- function(v, n) {
+  sqrt(sum(v^2)/n)
+}
