@@ -19,9 +19,10 @@ tau.estimate <- function(x) {
     stop("The data matrix must be numeric!")
   }
   n <- NROW(x)
-  corm <- cor(x)
-  xs <- scale_col(x)
-  v <- (n / ((n - 1)^3)) * (crossprod(xs^2) - 1 / n * (crossprod(xs))^2)
+  corm <- WGCNA::cor(x)
+  xs <- scale(x, center = TRUE, scale = TRUE)
+  v <- (n / ((n - 1)^3)) * (rfunctions::crossprodcpp(xs^2) - 1 / n * (
+    rfunctions::crossprodcpp(xs))^2)
   diag(v) <- 0
   I <- diag(NCOL(x))
   d <- (corm - I)^2
@@ -36,7 +37,7 @@ scale_col <- function(x) {
   }
   nc <- ncol(x)
   n <- nrow(x) - 1
-  for (i in seq_along(nc)) {
+  for (i in seq_len(nc)) {
     centered <- x[, i] - mean(x[, i])
     x[, i] <- centered/sd_helper(centered, n)
   }

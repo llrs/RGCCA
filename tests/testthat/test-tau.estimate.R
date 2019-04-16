@@ -13,3 +13,14 @@ test_that("implementations are coherent", {
   t1 <- tau.estimate(s)
   expect_true(t1 != 1)
 })
+
+
+test_that("test scale_col", {
+  set.seed(45792)
+  n.obs <- 150
+  n.vars <- 2
+  x <- matrix(rnorm(n.obs * n.vars), n.obs, n.vars)
+  out <- scale_col(x)
+  y <- scale(x, center = TRUE, scale = TRUE)
+  expect_equivalent(out, y)
+})
