@@ -17,7 +17,8 @@ License: GPL (>= 2)
 Imports: 
     Deriv,
     MASS,
-    WGCNA
+    WGCNA,
+    rfunctions
 Suggests: 
     covr,
     ggplot2,

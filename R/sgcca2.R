@@ -92,7 +92,7 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
   N <- max(ndefl)
   J <- length(A)
 
-  if (!is(C, "list")) {
+  if (!is.list(C)) {
     stop("You must provide a list of designs. You might be interested in sgcca.")
   }
   C_dims <- sapply(C, dim)
