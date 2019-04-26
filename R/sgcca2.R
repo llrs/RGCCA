@@ -268,7 +268,7 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
     colnames(Y[[b]]) <- paste0("comp", seq_len(max(ncomp)))
 
     # Average Variance Explained (AVE) per block
-    ave_X <- apply(cor(A[[b]], Y[[b]])^2, 2, mean)
+    ave_X <- apply(cor(A[[b]], Y[[b]], use = "pairwise.complete.obs")^2, 2, mean)
     ave_X[is.na(ave_X)] <- 0
     AVE_X[[b]] <- ave_X
   }

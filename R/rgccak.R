@@ -30,7 +30,7 @@
 #' @title Internal function for computing the RGCCA parameters (RGCCA block components, outer weight vectors, etc.).
 #' @export rgccak
 #' @importFrom MASS ginv
-#' @importFrom stats cor rnorm
+#' @importFrom stats rnorm
 #' @importFrom graphics plot
 
 rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
