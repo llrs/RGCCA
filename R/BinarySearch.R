@@ -3,7 +3,8 @@
 #' @keywords internal
 BinarySearch <-
   function(argu, sumabs) {
-    if (norm2(argu) == 0 || sum(abs(argu / norm2(argu))) <= sumabs) return(0)
+    nargu <- norm2(argu)
+    if (nargu == 0 || sum(abs(argu / nargu)) <= sumabs) return(0)
     lam_max <- max(abs(argu))
     lam1 <- 0
     lam2 <- lam_max
