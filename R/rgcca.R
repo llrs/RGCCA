@@ -144,6 +144,12 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     stop("Compute at least one component per block!")
   }
   pjs <- vapply(A, NCOL, numeric(1L))
+  js <- vapply(A, NROW, numeric(1L))
+
+  if (length(unique(js)) != 1) {
+    stop("The data don't have the same number of samples.")
+  }
+
   nb_row <- NROW(A[[1]])
   if (any(ncomp - pjs > 0)) {
     stop("For each block, choose a number of components smaller than the number of variables!")

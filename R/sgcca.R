@@ -117,10 +117,16 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   ndefl <- ncomp - 1
   N <- max(ndefl)
   J <- length(A)
+  js <- vapply(A, NROW, numeric(1L))
 
   if (!correct(C)) {
     stop("Design matrix should be symmetric and connected")
   }
+
+  if (length(unique(js)) != 1) {
+    stop("The data don't have the same number of samples.")
+  }
+
   if (ncol(C) != J) {
     stop("Design matrix should match the number of blocks provided")
   }

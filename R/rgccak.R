@@ -40,6 +40,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   n <- NROW(A[[1]])
   pjs <- vapply(A,NCOL, numeric(1L))
   Y <- matrix(0, n, J)
+  js <- vapply(A, NROW, numeric(1L))
 
   if (!correct(C)) {
     stop("Design matrix should be symmetric and connected")
@@ -47,6 +48,11 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   if (ncol(C) != J) {
     stop("Design matrix should match the number of blocks provided")
   }
+
+  if (length(unique(js)) != 1) {
+    stop("The data don't have the same number of samples.")
+  }
+
 
   if (length(tau) != length(A) && tau != "optimal") {
     stop("The shrinkage parameters should be of the same length as the input",
