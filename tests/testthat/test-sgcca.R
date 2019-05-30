@@ -195,3 +195,24 @@ test_that("errors solved", {
   expect_error(sgcca(A, C = C, c1 = shrinkage, ncomp = ncomp),
                "symmetric and connected")
 })
+
+
+
+test_that("different number of samples", {
+  skip_on_travis()
+  set.seed(45791)
+  data("ge_cgh_locIGR", package = "gliomaData")
+  A <- ge_cgh_locIGR$multiblocks
+  A[[1]] <- A[[1]][sample(1:53, size = 50), ]
+  Loc <- factor(ge_cgh_locIGR$y)
+  levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
+  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
+  tau <- c(1, 1, 0)
+
+  expect_error(sgcca(A, C,
+                        c1 = c(.071, .2, 1), ncomp = c(2, 2, 1),
+                        scheme = "centroid", verbose = FALSE
+  ), "number of samples")
+
+
+})
