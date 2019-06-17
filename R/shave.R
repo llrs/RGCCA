@@ -13,23 +13,8 @@ shave.list <- function(m, nbcomp) {
 }
 
 #' @export
-shaving.defult <- function(m, nbcomp) {
-  m[seq_len(nbcomp)]
-}
-
-#' @export
 shaving.matrix <- function(m, nbcomp) {
   m[, seq_len(nbcomp), drop = FALSE]
-}
-
-#' @export
-shaving.vector <- function(m, nbcomp) {
-  m[seq_len(nbcomp)]
-}
-
-#' @export
-shaving.numeric <- function(m, nbcomp) {
-  m[seq_len(nbcomp)]
 }
 
 #' @export
