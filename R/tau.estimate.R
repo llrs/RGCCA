@@ -19,7 +19,7 @@ tau.estimate <- function(x) {
     stop("The data matrix must be numeric!")
   }
   n <- NROW(x)
-  corm <- WGCNA::cor(x)
+  corm <- WGCNA::cor(x, use = 'pairwise.complete.obs')
   xs <- scale(x, center = TRUE, scale = TRUE)
   v <- (n / ((n - 1)^3)) * (rfunctions::crossprodcpp(xs^2) - 1 / n * (
     rfunctions::crossprodcpp(xs))^2)
