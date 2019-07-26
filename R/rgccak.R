@@ -43,10 +43,10 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   js <- vapply(A, NROW, numeric(1L))
 
   if (!correct(C)) {
-    stop("Design matrix should be symmetric and connected")
+    stop("Design matrix should be symmetric and connected.")
   }
   if (ncol(C) != J) {
-    stop("Design matrix should match the number of blocks provided")
+    stop("Design matrix should match the number of blocks provided.")
   }
 
   if (length(unique(js)) != 1) {
@@ -56,7 +56,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
   if (length(tau) != length(A) && tau != "optimal") {
     stop("The shrinkage parameters should be of the same length as the input",
-         "data, or 'optimal'")
+         "data, or 'optimal'.")
   }
 
   #if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
@@ -277,7 +277,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
     if (verbose & (iter %% 1)==0) {
       message(" Iter: ",formatC(iter,width=3, format="d"),
-              " Fit:",  formatC(crit[iter], digits=8, width=10, format="f"),
+              " Fit: ",  formatC(crit[iter], digits=8, width=10, format="f"),
               " Dif: ", formatC(crit[iter]-crit_old, digits=8, width=10, format="f"))
     }
 
@@ -297,7 +297,7 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     stop("The RGCCA algorithm did not converge after 1000 iterations.")
   }
   if (iter < 1000 & verbose) {
-    message("The RGCCA algorithm converged to a stationary point after", iter-1, "iterations")
+    message("The RGCCA algorithm converged to a stationary point after ", iter-1, " iterations")
   }
   if (verbose) {
     plot(crit[seq_len(iter)], xlab = "iteration", ylab = "criteria")
