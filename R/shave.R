@@ -21,3 +21,8 @@ shaving.matrix <- function(m, nbcomp) {
 shaving.double <- function(m, nbcomp) {
   m[seq_len(nbcomp)]
 }
+
+#' @export
+shaving.default <- function(m, nbcomp) {
+  m[seq_len(nbcomp)]
+}
