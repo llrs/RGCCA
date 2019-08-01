@@ -6,8 +6,6 @@
 #' @references [1] Schaefer J. and Strimmer K., 2005. A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statist. Appl. Genet. Mol. Biol. 4:32.
 #' @references [2] Jelizarow M., Guillemot V., Tenenhaus A., Strimmer K., Boulesteix A.-L., 2010. Over-optimism in bioinformatics: an illustration. Bioinformatics 26:1990-1998.
 #' @export tau.estimate
-#' @importFrom WGCNA cor
-#' @importFrom rfunctions crossprodcpp
 #' @examples
 #' n.obs <- 1e5
 #' n.vars <- 150
@@ -19,17 +17,16 @@ tau.estimate <- function(x) {
     stop("The data matrix must be numeric!")
   }
   n <- NROW(x)
-  corm <- WGCNA::cor(x, use = 'pairwise.complete.obs')
-  xs <- scale(x, center = TRUE, scale = TRUE)
-  v <- (n / ((n - 1)^3)) * (rfunctions::crossprodcpp(xs^2) - 1 / n * (
-    rfunctions::crossprodcpp(xs))^2)
+  corm <- cor(x, use = 'pairwise.complete.obs')
+  xs <- scale_col(x)
+  v <- (n / ((n - 1)^3)) * (crossprod(xs^2) - 1 / n * (
+    crossprod(xs))^2)
   diag(v) <- 0
   I <- diag(NCOL(x))
   d <- (corm - I)^2
   tau <- (sum(v)) / sum(d)
   max(min(tau, 1), 0)
 }
-
 
 scale_col <- function(x) {
   if (!is.matrix(x)) {
@@ -50,3 +47,4 @@ scale_col <- function(x) {
 sd_helper <- function(v, n) {
   sqrt(sum(v^2)/n)
 }
+

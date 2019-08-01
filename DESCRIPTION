@@ -16,9 +16,7 @@ Description: Multiblock data analysis concerns the analysis of
 License: GPL (>= 2)
 Imports: 
     Deriv,
-    MASS,
-    WGCNA,
-    rfunctions
+    MASS
 Suggests: 
     covr,
     ggplot2,
@@ -29,8 +27,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Remotes: 
-    llrs/gliomaData,
-    jaredhuling/rfunctions
+    llrs/gliomaData
 Bioc: true
 Encoding: UTF-8
 NeedsCompilation: no
