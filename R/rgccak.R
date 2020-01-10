@@ -54,7 +54,8 @@ rgccak <- function (A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   }
 
 
-  if (length(tau) != length(A) && tau != "optimal") {
+  if (is.vector(tau) && length(tau) != length(A) | any(is.na(tau)) |
+      !is.numeric(tau) && tau != "optimal") {
     stop("The shrinkage parameters should be of the same length as the input",
          "data, or 'optimal'.")
   }

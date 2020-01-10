@@ -135,7 +135,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
     stop("Provide a list of several sets of variables")
   }
 
-  if (is.vector(c1) & length(c1) != length(A) | any(is.na(c1)) | !is.numeric(c1)) {
+  if (is.vector(c1) && length(c1) != length(A) | any(is.na(c1)) | !is.numeric(c1)) {
     stop("The shrinkage parameters should be a numeric vector of the same length as the input data")
   }
 
