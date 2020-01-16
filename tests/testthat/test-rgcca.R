@@ -1,14 +1,15 @@
 context("RGCCA")
 
+data(Russett)
+set.seed(45791)
+X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
+X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
+X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
+A <- list(X_agric, X_ind, X_polit)
+# Define the design matrix (output = C)
+C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
+
 test_that("Example 1:factorial", {
-  data(Russett)
-  set.seed(45791)
-  X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
-  X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
-  X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
-  A <- list(X_agric, X_ind, X_polit)
-  # Define the design matrix (output = C)
-  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   result.rgcca <- rgcca(A, C,
     tau = c(1, 1, 1), scheme = "factorial",
     scale = TRUE, verbose = FALSE
@@ -39,14 +40,6 @@ test_that("Example 1:factorial", {
 
 
 test_that("Example 1: factorial & optimal tau", {
-  data(Russett)
-  set.seed(45791)
-  X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
-  X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
-  X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
-  A <- list(X_agric, X_ind, X_polit)
-  # Define the design matrix (output = C)
-  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   result.rgcca <- rgcca(A, C,
                         tau = "optimal", scheme = "factorial",
                         scale = TRUE, verbose = FALSE
@@ -130,14 +123,6 @@ test_that("Example 2: function", {
 
 
 test_that("Example 3: factorial", {
-  set.seed(45791)
-  Ytest <- matrix(0, 47, 3)
-  X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
-  X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
-  X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
-  A <- list(X_agric, X_ind, X_polit)
-  # Define the design matrix (output = C)
-  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   result.rgcca <- rgcca(A, C,
     tau = rep(1, 3), ncomp = rep(1, 3),
     scheme = "factorial", verbose = FALSE
@@ -171,13 +156,6 @@ test_that("Example 3: factorial", {
 })
 
 test_that("Example 3: horst", {
-  Ytest <- matrix(0, 47, 3)
-  X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])
-  X_ind <- as.matrix(Russett[, c("gnpr", "labo")])
-  X_polit <- as.matrix(Russett[, c("demostab", "dictator")])
-  A <- list(X_agric, X_ind, X_polit)
-  # Define the design matrix (output = C)
-  C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   result.rgcca <- rgcca(A, C,
                         tau = rep(1, 3), ncomp = rep(1, 3),
                         scheme = "horst", verbose = FALSE
