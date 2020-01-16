@@ -17,7 +17,7 @@ tau.estimate <- function(x) {
     stop("The data matrix must be numeric!")
   }
   n <- NROW(x)
-  corm <- cor(x, use = 'pairwise.complete.obs')
+  corm <- cor(x)
   xs <- scale_col(x)
   v <- (n / ((n - 1)^3)) * (crossprod(xs^2) - 1 / n * (
     crossprod(xs))^2)
