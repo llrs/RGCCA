@@ -118,6 +118,10 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   N <- max(ndefl)
   J <- length(A)
   js <- vapply(A, NROW, numeric(1L))
+  pjs <- vapply(A, NCOL, numeric(1L))
+  nb_ind <- NROW(A[[1]])
+  AVE_X <- list()
+  AVE_outer <- rep(NA, max(ncomp))
 
   if (!correct(C)) {
     stop("Design matrix should be symmetric and connected")
@@ -142,11 +146,10 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   if (length(ncomp) != length(A) && all(ncomp >= 1)) {
     stop("The ncomp parameter should be of the same length as the input data")
   }
-  pjs <- vapply(A, NCOL, numeric(1L))
-  nb_ind <- NROW(A[[1]])
-  AVE_X <- list()
-  AVE_outer <- rep(NA, max(ncomp))
 
+  if (!any(vapply(A, is.matrix, logical(1L)))) {
+    stop("All input must be a matrix.")
+  }
   if (any(ncomp < 1)) {
     stop("One must compute at least one component per block!")
   }
@@ -170,14 +173,14 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
   ###################################################
 
   if (mode(scheme) != "function") {
-    if ((scheme != "horst") & (scheme != "factorial") & (scheme != "centroid")) {
+    if ((scheme != "horst") && (scheme != "factorial") && (scheme != "centroid")) {
       stop("Choose one of the three following schemes: horst, centroid, factorial or design the g function")
     }
     if (verbose) {
       message("Computation of the SGCCA block components based on the ", scheme, " scheme")
     }
   }
-  if (mode(scheme) == "function" & verbose) {
+  if (mode(scheme) == "function" && verbose) {
     message("Computation of the SGCCA block components based on the g scheme")
   }
 
