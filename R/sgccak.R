@@ -22,7 +22,7 @@
 #' @return \item{scheme}{The scheme chosen by the user (user specified).}
 #' @title Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)
 #' @importFrom Deriv Deriv
-#' @export sgccak
+#' @noRd
 sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
                    tol = .Machine$double.eps, init="svd", bias = TRUE,
                    verbose = TRUE) {
@@ -50,7 +50,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   # if (scale == TRUE) A <- lapply(A, function(x) scale2(x, bias = bias))
   #  Choose J arbitrary vectors
   if (init == "svd") {
-    # SVD Initialisation of a_j or \alpha_j
+    # SVD Initialization of a_j or \alpha_j
     a <- lapply(A, function(x) svd(x, nu = 0, nv = 1)$v) #
   } else if (init == "random") {
     a <- lapply(pjs, rnorm)
