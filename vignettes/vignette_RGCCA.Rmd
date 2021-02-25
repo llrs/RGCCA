@@ -184,7 +184,7 @@ RGCCA is a rich technique that encompasses a large number of multiblock methods 
 |**Multiple Co-Inertia Analysis** [@Chessel1996] |  $x^2$ | $\tau_j = 1, 1 \le j \le J$ and $\tau_{J+1} = 0$ | $\ma C_4$ |
 |**PLS path modeling - mode B** [@Wold1982] |  $abs(x)$ | $\tau_j = 0, 1 \le j \le J$ | $c_{jk}=1$ for two connected block and $c_{jk} = 0$ otherwise |
 
-Table: Special cases of RGCCA in a situtation of $J \ge 2$ blocks. When $\tau_J+1$ is introduced, it is assumed that  $\ma X_1, \ldots, \ma X_J$ are connected to a $(J + 1)$th block defined as the concatenation of the blocks, $\ma X_{J+1} = \bigg[\ma X_1 , \ma X_2, \ldots, \ma X_J \bigg]$ and that $\tau_{J+1}$ corresponds to the shrinkage parameter associated with $\ma X_{J+1}$.
+Table: Special cases of RGCCA in a situation of $J \ge 2$ blocks. When $\tau_J+1$ is introduced, it is assumed that  $\ma X_1, \ldots, \ma X_J$ are connected to a $(J + 1)$th block defined as the concatenation of the blocks, $\ma X_{J+1} = \bigg[\ma X_1 , \ma X_2, \ldots, \ma X_J \bigg]$ and that $\tau_{J+1}$ corresponds to the shrinkage parameter associated with $\ma X_{J+1}$.
 
 For all the methods of Table 1, a single very simple monotonically convergent gradient-based algorithm is implemented within the RGCCA package and gives at convergence a solution of the stationary equations related to the optimization problem (\ref{optim_RGCCA}). In addition, SGCCA offers a sparse counterpart to all the covariance-based methods of RGCCA. From these perspectives, R/SGCCA provide a general framework for exploratory data analysis of multiblock datasets that has immediate practical consequences for a unified statistical analysis and implementation strategy. 
 
