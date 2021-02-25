@@ -1,5 +1,3 @@
-context("test-soft")
-
 set.seed(45)
 x <- rnorm(10)
 d <- rnorm(10)
@@ -16,6 +14,6 @@ test_that("soft works", {
 })
 
 test_that("equivalent (but slower)",  {
-  out <- sign(x) * ifelse(abs(x)-d >0, abs(x)-d, 0)
+  out <- sign(x) * ifelse(abs(x) - d > 0, abs(x) - d, 0)
   expect_equal(out, soft(x, d))
 })

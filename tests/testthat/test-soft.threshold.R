@@ -1,5 +1,3 @@
-context("test_soft.threshold")
-
 test_that("soft.threshold works", {
   x <- rnorm(10)
   out <- soft.threshold(x, 0.5)

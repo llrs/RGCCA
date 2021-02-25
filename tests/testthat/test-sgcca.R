@@ -215,7 +215,7 @@ test_that("different number of samples", {
 })
 
 
-test_that("#32", {
+test_that("#32 input are not matrices", {
   path <- test_path("issue_data.RDS")
   if (file.exists(path)) {
     B <- readRDS(path)
@@ -226,5 +226,7 @@ test_that("#32", {
                  y = 1)
   m <- structure(c(0, 0, 0.9, 0.5, 0, 0, 0, 0.1, 0.9, 0, 0, 0, 0.5,
                    0.1, 0, 0), .Dim = c(4L, 4L), .Dimnames = list(NULL, NULL))
-  modelS <- sgcca(B, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(2, 4))
+  expect_error(sgcca(B, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(1, 4)))
+  B2 <- lapply(B, as.matrix)
+  sgcca(B2, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(1, 4))
 })
