@@ -1,6 +1,4 @@
-context("Testing sgcca2")
-
-test_that("centroid", {
+test_that("sgcca2 centroid", {
   skip_on_travis()
   set.seed(45791)
   data("ge_cgh_locIGR", package = "gliomaData")
@@ -64,7 +62,7 @@ test_that("centroid", {
 
 
 
-test_that("horst", {
+test_that("sgcca2 horst", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
@@ -124,7 +122,7 @@ test_that("horst", {
 })
 
 
-test_that("factorial", {
+test_that("sgcca2 factorial", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
@@ -185,7 +183,7 @@ test_that("factorial", {
 })
 
 
-test_that("errors solved", {
+test_that("sgcca2 errors solved", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
@@ -197,6 +195,6 @@ test_that("errors solved", {
   tau <- c(1, 1, 0)
   shrinkage <- c(.071, .2, 1)
   ncomp <- c(2, 2, 1)
-  expect_warning(a <- sgcca2(A, C = C, c1 = shrinkage, ncomp = ncomp),
+  a <- expect_warning(sgcca2(A, C = C, c1 = shrinkage, ncomp = ncomp),
                  "less variability than the second one.")
 })

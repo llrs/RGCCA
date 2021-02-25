@@ -1,6 +1,4 @@
-context("Testing sgcca")
-
-test_that("centroid", {
+test_that("sgcca centroid", {
   skip_on_travis()
   set.seed(45791)
   data("ge_cgh_locIGR", package = "gliomaData")
@@ -62,7 +60,7 @@ test_that("centroid", {
 
 
 
-test_that("horst", {
+test_that("sgcca horst", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
@@ -120,7 +118,7 @@ test_that("horst", {
 })
 
 
-test_that("factorial", {
+test_that("sgcca factorial", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
@@ -214,5 +212,19 @@ test_that("different number of samples", {
                         scheme = "centroid", verbose = FALSE
   ), "number of samples")
 
+})
 
+
+test_that("#32", {
+  path <- test_path("issue_data.RDS")
+  if (file.exists(path)) {
+    B <- readRDS(path)
+  } else {
+    testthat::skip("No data to test")
+  }
+  shrinkage <- c(RNAseq = 0.486223918802408, micro = 0.938776330169865, 0.5,
+                 y = 1)
+  m <- structure(c(0, 0, 0.9, 0.5, 0, 0, 0, 0.1, 0.9, 0, 0, 0, 0.5,
+                   0.1, 0, 0), .Dim = c(4L, 4L), .Dimnames = list(NULL, NULL))
+  modelS <- sgcca(B, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(2, 4))
 })

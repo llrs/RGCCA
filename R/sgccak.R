@@ -63,7 +63,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   }
 
   const <- c1 * sqrt(pjs)
-  # 	Apply the constraints of the general otpimization problem
+  # 	Apply the constraints of the general optimization problem
   # 	and compute the outer components
   iter <- 1
   crit <- numeric(1000L)

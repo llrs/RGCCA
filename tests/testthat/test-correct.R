@@ -1,5 +1,3 @@
-context("test-correct")
-
 test_that("correct works", {
   C <- matrix(0, ncol = 5, nrow = 5)
   C[1, 3] <- C[3, 1] <- 1

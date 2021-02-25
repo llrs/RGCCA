@@ -1,6 +1,3 @@
-context("test-binarysearch")
-
-
 set.seed(45)
 x <- rnorm(15702)
 d <- rnorm(15702)

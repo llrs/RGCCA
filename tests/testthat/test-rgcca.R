@@ -1,5 +1,3 @@
-context("RGCCA")
-
 data(Russett)
 set.seed(45791)
 X_agric <- as.matrix(Russett[, c("gini", "farm", "rent")])

@@ -1,5 +1,3 @@
-context("test-miscrossprod")
-
 set.seed(45791)
 data("ge_cgh_locIGR", package = "gliomaData")
 A <- ge_cgh_locIGR$multiblocks

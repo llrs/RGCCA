@@ -1,5 +1,3 @@
-context("scale2")
-
 test_that("Works without changing", {
   out <- scale2(1:5)
   expect_equal(out[, 1], c(
