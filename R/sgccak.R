@@ -66,7 +66,8 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   # 	Apply the constraints of the general optimization problem
   # 	and compute the outer components
   iter <- 1
-  crit <- numeric(1000L)
+  n_iter_max <- 1000L
+  crit <- numeric(n_iter_max)
   Y <- Z <- matrix(0, NROW(A[[1]]), J)
   for (q in seq_len(J)) {
     if (remove[q]) {
@@ -149,10 +150,11 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
   }
 
 
-  if (iter > 1000) {
-    stop("The SGCCA algorithm did not converge after 1000 iterations.")
+  if (iter > n_iter_max) {
+    stop("The SGCCA algorithm did not converge after ", n_iter_max,
+         " iterations.")
   }
-  if (iter < 1000 & verbose) {
+  if (iter < n_iter_max & verbose) {
     message("The SGCCA algorithm converged to a stationary point after ", iter - 1, " iterations")
   }
   if (verbose) {
