@@ -5,10 +5,18 @@
 \title{Variable Selection For Generalized Canonical Correlation Analysis 2 (SGCCA2)
 SGCCA2 extends SGCCA to address the issue following the same design in all the dimensions.}
 \usage{
-sgcca2(A, C = rep(1 - diag(length(A)), max(ncomp)), c1 = rep(1,
-  length(A)), ncomp = rep(2, length(A)), scheme = "centroid",
-  scale = TRUE, init = "svd", bias = TRUE,
-  tol = .Machine$double.eps, verbose = FALSE)
+sgcca2(
+  A,
+  C = rep(1 - diag(length(A)), max(ncomp)),
+  c1 = rep(1, length(A)),
+  ncomp = rep(2, length(A)),
+  scheme = "centroid",
+  scale = TRUE,
+  init = "svd",
+  bias = TRUE,
+  tol = .Machine$double.eps,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{A}{A list that contains the \eqn{J} blocks of variables \eqn{X_1, X_2, ..., X_J}.}

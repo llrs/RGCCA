@@ -4,9 +4,9 @@ Title: Regularized and Sparse Generalized Canonical Correlation
     Analysis for Multiblock Data
 Version: 2.1.3
 Date: 2017-04-26
-Author: Arthur Tenenhaus and Vincent Guillemot
-Maintainer: Arthur Tenenhaus
-    <arthur.tenenhaus@centralesupelec.fr>
+Author@R: c(person("Arthur Tenenhaus", role = c("aut", "cre")),
+    person("Vincent Guillemot", role = "aut"),
+    person("Lluis Revilla Sancho", role = "ctb"))
 Description: Multiblock data analysis concerns the analysis of
     several sets of variables (blocks) observed on the same group of
     individuals. The main aims of the RGCCA package are: (i) to study the
@@ -31,4 +31,4 @@ Remotes:
 Bioc: true
 Encoding: UTF-8
 NeedsCompilation: no
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

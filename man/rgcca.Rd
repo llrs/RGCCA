@@ -4,9 +4,18 @@
 \alias{rgcca}
 \title{Regularized Generalized Canonical Correlation Analysis (RGCCA)}
 \usage{
-rgcca(A, C = 1 - diag(length(A)), tau = rep(1, length(A)),
-  ncomp = rep(1, length(A)), scheme = "centroid", scale = TRUE,
-  init = "svd", bias = TRUE, tol = 1e-08, verbose = TRUE)
+rgcca(
+  A,
+  C = 1 - diag(length(A)),
+  tau = rep(1, length(A)),
+  ncomp = rep(1, length(A)),
+  scheme = "centroid",
+  scale = TRUE,
+  init = "svd",
+  bias = TRUE,
+  tol = 1e-08,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{A}{A list that contains the \eqn{J} blocks of variables \eqn{X_1, X_2, ..., X_J}.}

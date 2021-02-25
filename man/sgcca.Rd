@@ -4,10 +4,18 @@
 \alias{sgcca}
 \title{Variable Selection For Generalized Canonical Correlation Analysis (SGCCA)}
 \usage{
-sgcca(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)),
-  ncomp = rep(1, length(A)), scheme = "centroid", scale = TRUE,
-  init = "svd", bias = TRUE, tol = .Machine$double.eps,
-  verbose = FALSE)
+sgcca(
+  A,
+  C = 1 - diag(length(A)),
+  c1 = rep(1, length(A)),
+  ncomp = rep(1, length(A)),
+  scheme = "centroid",
+  scale = TRUE,
+  init = "svd",
+  bias = TRUE,
+  tol = .Machine$double.eps,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{A}{A list that contains the \eqn{J} blocks of variables \eqn{X_1, X_2, ..., X_J}.}
