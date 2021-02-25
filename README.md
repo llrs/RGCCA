@@ -1,5 +1,8 @@
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/llrs/RGCCA/workflows/R-CMD-check/badge.svg)](https://github.com/llrs/RGCCA/actions)
 [![Travis build status](https://travis-ci.org/llrs/RGCCA.svg?branch=master)](https://travis-ci.org/llrs/RGCCA)
 [![Coverage status](https://codecov.io/gh/llrs/RGCCA/branch/master/graph/badge.svg)](https://codecov.io/github/llrs/RGCCA?branch=master)
+<!-- badges: end -->
 
 # RGCCA
 
@@ -22,7 +25,7 @@ devtools::install_github("llrs/RGCCA")
 ```
 ## Example
 
-This is a basic example which shows you how the Agricultural inequality, the industrial development and the political enviorment classify some contries in 1964:
+This is a basic example which shows you how the Agricultural inequality, the industrial development and the political enviroment classify some countries in 1964:
 
 ``` r
 data(Russett)
