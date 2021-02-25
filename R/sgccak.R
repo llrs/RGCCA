@@ -42,7 +42,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
     stop("Design matrix should be symmetric and connected")
   }
 
-  if (is.vector(c1) && length(c1) != length(A) | any(is.na(c1)) | !is.numeric(c1)) {
+  if (is.vector(c1) && length(c1) != length(A) || any(is.na(c1)) || !is.numeric(c1)) {
     stop("The shrinkage parameters should be a numeric vector of the same length as the input data")
   }
 
@@ -141,7 +141,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
       , abs(crit[iter] - crit_old)
     )
 
-    if (any(stopping_criteria < tol) | (iter > 1000)) {
+    if (any(stopping_criteria < tol) || (iter > n_iter_max)) {
       break
     }
     crit_old <- crit[iter]
@@ -154,7 +154,7 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
     stop("The SGCCA algorithm did not converge after ", n_iter_max,
          " iterations.")
   }
-  if (iter < n_iter_max & verbose) {
+  if (verbose && iter < n_iter_max ) {
     message("The SGCCA algorithm converged to a stationary point after ", iter - 1, " iterations")
   }
   if (verbose) {

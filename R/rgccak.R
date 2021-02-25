@@ -53,7 +53,7 @@ rgccak <- function(A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   }
 
 
-  if ((is.vector(tau) && length(tau) != length(A) | any(is.na(tau)) |
+  if ((is.vector(tau) && length(tau) != length(A) || any(is.na(tau)) ||
        !is.numeric(tau)) && (tau != "optimal")) {
     stop("The shrinkage parameters should be of the same length as the input",
          "data, or 'optimal'.")
@@ -129,6 +129,7 @@ rgccak <- function(A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
   }
 
   iter = 1
+  n_iter_max <- 1000
   crit = numeric()
   Z = matrix(0, NROW(A[[1]]), J)
   a_old = a
@@ -284,7 +285,7 @@ rgccak <- function(A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
     stopping_criteria = c(drop(crossprod(Reduce("c", mapply("-", a, a_old))))
                           , crit[iter]-crit_old)
 
-    if ( any(stopping_criteria < tol) | (iter > 1000))
+    if (any(stopping_criteria < tol) || (iter > n_iter_max))
       break
 
     crit_old = crit[iter]
@@ -293,10 +294,10 @@ rgccak <- function(A, C, tau = "optimal", scheme = "centroid", scale = FALSE,
 
   }
 
-  if (iter > 1000) {
-    stop("The RGCCA algorithm did not converge after 1000 iterations.")
+  if (iter > n_iter_max) {
+    stop("The RGCCA algorithm did not converge after ", n_iter_max, " iterations.")
   }
-  if (iter < 1000 & verbose) {
+  if (verbose && iter < n_iter_max) {
     message("The RGCCA algorithm converged to a stationary point after ", iter-1, " iterations")
   }
   if (verbose) {

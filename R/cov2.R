@@ -1,3 +1,5 @@
+#' Variance and Covariance (Matrices)
+#'
 #' cov2() is similar to cov() but has an additional argument. The denominator \eqn{n} (bias = TRUE)
 #' can be used (instead of \eqn{n-1}) to give a biased estimator of the (co)variance.
 #' @param x A numeric vector, matrix or data.frame.
@@ -5,7 +7,6 @@
 #' @param bias A logical value. If bias = TRUE, \eqn{n} is used to give a biased estimator of the (co)variance.
 #' If bias = FALSE, \eqn{n-1} is used (default: TRUE).
 #' @return \item{C}{Estimation of the variance (resp. covariance) of x (resp. x and y).}
-#' @title Variance and Covariance (Matrices)
 #' @export cov2
 #' @importFrom stats cov
 

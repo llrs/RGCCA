@@ -1,3 +1,5 @@
+#' deflation function
+#'
 #' The function defl.select() computes residual matrices \eqn{X_{1,h+1}, \ldots, X_{J,h+1}}. These
 #' residual matrices are determined according to the following formula: \eqn{X_{j,h+1} = X_{jh} - y_{jh} p_{jh}^t}.
 #' @param yy  A matrix that contains the SGCCA block components of each block: \eqn{y_{1h}, \ldots, y_{Jh}}
@@ -7,7 +9,6 @@
 #' @param nbloc Number of blocks.
 #' @return \item{resdefl}{A list of \eqn{J} elements that contains \eqn{X_{1,h+1}, \ldots, X_{J,h+1}}.}
 #' @return \item{pdefl}{A list of \eqn{J} elements that contains \eqn{p_{1h}, \ldots, p_{Jh}}.}
-#' @title deflation function
 #' @export defl.select
 
 defl.select <- function(yy, rr, nncomp, nn, nbloc) {

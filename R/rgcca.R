@@ -3,8 +3,11 @@
 #   cat("Outputs for RGCCA: \n")
 # }
 
+#' Regularized Generalized Canonical Correlation Analysis (RGCCA)
+#'
 #' Regularized Generalized Canonical Correlation Analysis (RGCCA) is a generalization
 #' of regularized canonical correlation analysis to three or more sets of variables.
+#'
 #' Given \eqn{J} matrices \eqn{X_1, X_2, ..., X_J} that represent
 #' \eqn{J} sets of variables observed on the same set of \eqn{n} individuals. The matrices
 #' \eqn{X_1, X_2, ..., X_J} must have the same number of rows,
@@ -56,7 +59,6 @@
 #' @references Tenenhaus A., Philippe C., & Frouin V. (2015). Kernel Generalized Canonical Correlation Analysis. Computational Statistics and Data Analysis, 90, 114-131.
 #' @references Tenenhaus A. and Tenenhaus M., (2011), Regularized Generalized Canonical Correlation Analysis, Psychometrika, Vol. 76, Nr 2, pp 257-284.
 #' @references Schafer J. and Strimmer K., (2005), A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statist. Appl. Genet. Mol. Biol. 4:32.
-#' @title Regularized Generalized Canonical Correlation Analysis (RGCCA)
 #' @examples
 #' #############
 #' # Example 1 #
@@ -155,7 +157,7 @@ rgcca <- function(A, C = 1 - diag(length(A)), tau = rep(1, length(A)), ncomp = r
     stop("For each block, choose a number of components smaller than the number of variables!")
   }
 
-  if ((is.vector(tau) && length(tau) != length(A) | any(is.na(tau)) |
+  if ((is.vector(tau) && length(tau) != length(A) || any(is.na(tau)) ||
       !is.numeric(tau)) && (tau != "optimal")) {
     stop("The shrinkage parameters should be of the same length as the input",
          "data, or 'optimal'")

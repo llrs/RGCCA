@@ -1,5 +1,9 @@
-#' @title Variable Selection For Generalized Canonical Correlation Analysis 2 (SGCCA2)
-#' SGCCA2 extends SGCCA to address the issue following the same design in all the dimensions.
+#' Variable Selection For Generalized Canonical Correlation Analysis 2 (SGCCA2)
+#'
+#' SGCCA2 extends SGCCA to allowing to change the design in each the dimension.
+#' As such \code{C} can be a list of matrices of the same dimensions as the
+#' number of datasets on \code{A}.
+#'
 #' @param A  A list that contains the \eqn{J} blocks of variables \eqn{X_1, X_2, ..., X_J}.
 #' @param C  A list that contains the design matrix that describes the relationships between blocks (default: complete design).
 #' @param c1 Either a \eqn{1*J} vector or a \eqn{max(ncomp) * J} matrix encoding the L1 constraints applied to the outer weight vectors.
@@ -26,7 +30,7 @@
 #' @return \item{ncomp}{A \eqn{1 \times J} vector that contains the number of components for each block (user specified).}
 #' @return \item{crit}{A vector that contains the values of the objective function at each iterations.}
 #' @return \item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE): AVE(for one block), AVE(outer model), AVE(inner model).}
-#' @references Tenenhaus, A., Philippe, C., Guillemot, V., Le Cao, K. A., Grill, J., and Frouin, V. , "Variable selection for generalized canonical correlation analysis.," Biostatistics, vol. 15, no. 3, pp. 569-583, 2014.
+#' @author Lluís Revilla
 #' @examples
 #'
 #' #############
@@ -96,7 +100,7 @@ sgcca2 <- function(A, C = rep(1 - diag(length(A)), max(ncomp)),
     stop("You must provide a list of designs. You might be interested in sgcca.")
   }
   C_dims <- sapply(C, dim)
-  if (length(unique(C_dims[1, ])) != 1 | length(unique(C_dims[2, ])) != 1) {
+  if (length(unique(C_dims[1, ])) != 1 || length(unique(C_dims[2, ])) != 1) {
     stop("Different sizes on the design matrices")
   }
   C_def <- Reduce(`+`, C)

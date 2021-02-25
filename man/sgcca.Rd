@@ -67,8 +67,10 @@ A list of class sgcca with the following elements:
 }
 \description{
 SGCCA extends RGCCA to address the issue of variable selection. Specifically,
-RGCCA is combined with an L1-penalty that gives rise to Sparse GCCA (SGCCA) which
-is implemented in the function sgcca().
+RGCCA is combined with an L1-penalty that gives rise to Sparse GCCA (SGCCA)
+implemented in this function.
+}
+\details{
 Given \eqn{J} matrices \eqn{X_1, X_2, ..., X_J}, that represent
 \eqn{J} sets of variables observed on the same set of \eqn{n} individuals. The matrices
 \eqn{X_1, X_2, ..., X_J} must have the same number of rows, but may

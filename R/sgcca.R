@@ -1,6 +1,9 @@
+#' Variable Selection For Generalized Canonical Correlation Analysis (SGCCA)
+#'
 #' SGCCA extends RGCCA to address the issue of variable selection. Specifically,
-#' RGCCA is combined with an L1-penalty that gives rise to Sparse GCCA (SGCCA) which
-#' is implemented in the function sgcca().
+#' RGCCA is combined with an L1-penalty that gives rise to Sparse GCCA (SGCCA)
+#' implemented in this function.
+#'
 #' Given \eqn{J} matrices \eqn{X_1, X_2, ..., X_J}, that represent
 #' \eqn{J} sets of variables observed on the same set of \eqn{n} individuals. The matrices
 #' \eqn{X_1, X_2, ..., X_J} must have the same number of rows, but may
@@ -44,7 +47,6 @@
 #' @return \item{crit}{A vector that contains the values of the objective function at each iterations.}
 #' @return \item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE): AVE(for one block), AVE(outer model), AVE(inner model).}
 #' @references Tenenhaus, A., Philippe, C., Guillemot, V., Le Cao, K. A., Grill, J., and Frouin, V. , "Variable selection for generalized canonical correlation analysis.," Biostatistics, vol. 15, no. 3, pp. 569-583, 2014.
-#' @title Variable Selection For Generalized Canonical Correlation Analysis (SGCCA)
 #' @examples
 #'
 #' #############
@@ -221,7 +223,7 @@ sgcca <- function(A, C = 1 - diag(length(A)), c1 = rep(1, length(A)), ncomp = re
     out <- list(
       Y = Y, a = a, astar = a,
       C = C, scheme = scheme, c1 = c1, ncomp = ncomp,
-      crit = result$crit[length(result$crit)],
+      crit = result$crit,
       AVE = AVE
     )
     class(out) <- "sgcca"

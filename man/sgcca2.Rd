@@ -2,8 +2,7 @@
 % Please edit documentation in R/sgcca2.R
 \name{sgcca2}
 \alias{sgcca2}
-\title{Variable Selection For Generalized Canonical Correlation Analysis 2 (SGCCA2)
-SGCCA2 extends SGCCA to address the issue following the same design in all the dimensions.}
+\title{Variable Selection For Generalized Canonical Correlation Analysis 2 (SGCCA2)}
 \usage{
 sgcca2(
   A,
@@ -67,8 +66,9 @@ A list of class sgcca with the following elements:
 \item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE): AVE(for one block), AVE(outer model), AVE(inner model).}
 }
 \description{
-Variable Selection For Generalized Canonical Correlation Analysis 2 (SGCCA2)
-SGCCA2 extends SGCCA to address the issue following the same design in all the dimensions.
+SGCCA2 extends SGCCA to allowing to change the design in each the dimension.
+As such \code{C} can be a list of matrices of the same dimensions as the
+number of datasets on \code{A}.
 }
 \examples{
 
@@ -124,6 +124,6 @@ result.sgcca = sgcca2(A, C, c1 = matrix(c(.071,.2, 1, 0.06, 0.15, 1), nrow = 2, 
                      ncomp = c(2, 2, 1), scheme = "factorial", scale = TRUE, bias = TRUE,
                      init = init, verbose = TRUE)}
 }
-\references{
-Tenenhaus, A., Philippe, C., Guillemot, V., Le Cao, K. A., Grill, J., and Frouin, V. , "Variable selection for generalized canonical correlation analysis.," Biostatistics, vol. 15, no. 3, pp. 569-583, 2014.
+\author{
+Lluís Revilla
 }

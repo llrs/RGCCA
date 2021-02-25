@@ -66,6 +66,8 @@ If tau is a matrix, tau[k, j] is associated with \eqn{X_{jk}} (\eqn{k}th residua
 \description{
 Regularized Generalized Canonical Correlation Analysis (RGCCA) is a generalization
 of regularized canonical correlation analysis to three or more sets of variables.
+}
+\details{
 Given \eqn{J} matrices \eqn{X_1, X_2, ..., X_J} that represent
 \eqn{J} sets of variables observed on the same set of \eqn{n} individuals. The matrices
 \eqn{X_1, X_2, ..., X_J} must have the same number of rows,
