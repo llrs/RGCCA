@@ -3,7 +3,7 @@ test_that("sgcca centroid", {
   set.seed(45791)
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
-  Loc <- factor(ge_cgh_locIGR$y)
+  Loc <- factor(ge_cgh_locIGR$ylabel)
   levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
   C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   tau <- c(1, 1, 0)
@@ -64,7 +64,7 @@ test_that("sgcca horst", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
-  Loc <- factor(ge_cgh_locIGR$y)
+  Loc <- factor(ge_cgh_locIGR$ylabel)
   levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
   C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   tau <- c(1, 1, 0)
@@ -122,7 +122,7 @@ test_that("sgcca factorial", {
   skip_on_travis()
   data("ge_cgh_locIGR", package = "gliomaData")
   A <- ge_cgh_locIGR$multiblocks
-  Loc <- factor(ge_cgh_locIGR$y)
+  Loc <- factor(ge_cgh_locIGR$ylabel)
   levels(Loc) <- colnames(ge_cgh_locIGR$multiblocks$y)
   C <- matrix(c(0, 0, 1, 0, 0, 1, 1, 1, 0), 3, 3)
   tau <- c(1, 1, 0)
