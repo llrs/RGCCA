@@ -1,3 +1,5 @@
+#' Internal function for computing the RGCCA parameters (RGCCA block components, outer weight vectors, etc.).
+#'
 #' The function rgccak() is called by rgcca() and does not have to be used by the user.
 #' The function rgccak() computes the RGCCA block components, outer weight vectors, etc.,
 #' for each block and each dimension. Depending on the dimensionality of each block \eqn{X_j , j = 1, ..., J},
@@ -27,7 +29,6 @@
 #' @references Tenenhaus A., Philippe C., & Frouin V. (2015). Kernel Generalized Canonical Correlation Analysis. Computational Statistics and Data Analysis, 90, 114-131.
 #' @references Tenenhaus A. and Tenenhaus M., (2011), Regularized Generalized Canonical Correlation Analysis, Psychometrika, Vol. 76, Nr 2, pp 257-284.
 #' @references Schafer J. and Strimmer K., (2005), A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statist. Appl. Genet. Mol. Biol. 4:32.
-#' @title Internal function for computing the RGCCA parameters (RGCCA block components, outer weight vectors, etc.).
 #' @noRd
 #' @importFrom MASS ginv
 #' @importFrom stats rnorm
