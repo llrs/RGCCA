@@ -16,12 +16,14 @@ test_that("sgcca centroid", {
   expect_equal(result.sgcca$C, C)
   expect_equal(result.sgcca$ncomp, c(2L, 2L, 1L))
   expect_length(result.sgcca$crit, 2L)
-
   expect_equal(sum(result.sgcca$a[[1]] != 0), 296L)
   expect_equal(result.sgcca$a[[1]][261, ], c(-0.309282475578372, 0))
   expect_equal(sum(result.sgcca$a[[2]] != 0), 161L)
   expect_equal(sum(result.sgcca$a[[3]] != 0), 3L)
 
+  ha <- scale2_(A[[1]], TRUE) %*% result.sgcca$astar[[1]]
+  colnames(ha) <- c("comp1", "comp2")
+  expect_equal(ha, result.sgcca$Y[[1]])
   expect_length(result.sgcca$crit[[2]], 16L)
   expect_equal(result.sgcca$scheme, "centroid")
   expect_equal(result.sgcca$AVE$AVE_inner, c(0.609213197536486, 0.45712854179023))
@@ -78,6 +80,9 @@ test_that("sgcca horst", {
   expect_equal(sum(result.sgcca$a[[2]] != 0), 161L)
   expect_equal(sum(result.sgcca$a[[3]] != 0), 3L)
 
+  ha <- scale2_(A[[1]], TRUE) %*% result.sgcca$astar[[1]]
+  colnames(ha) <- c("comp1", "comp2")
+  expect_equal(ha, result.sgcca$Y[[1]])
   expect_equal(result.sgcca$C, C)
   expect_equal(result.sgcca$ncomp, c(2L, 2L, 1L))
   expect_length(result.sgcca$crit, 2L)
@@ -132,6 +137,9 @@ test_that("sgcca factorial", {
                         scheme = "factorial", verbose = FALSE
   )
 
+  ha <- scale2_(A[[1]], TRUE) %*% result.sgcca$astar[[1]]
+  colnames(ha) <- c("comp1", "comp2")
+  expect_equal(ha, result.sgcca$Y[[1]])
   expect_equal(result.sgcca$C, C)
   expect_equal(result.sgcca$ncomp, c(2L, 2L, 1L))
   expect_length(result.sgcca$crit, 2L)
@@ -228,5 +236,5 @@ test_that("#32 input are not matrices", {
                    0.1, 0, 0), .Dim = c(4L, 4L), .Dimnames = list(NULL, NULL))
   expect_error(sgcca(B, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(1, 4)))
   B2 <- lapply(B, as.matrix)
-  sgcca(B2, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(1, 4))
+  r <- sgcca(B2, C = m, scale = FALSE, c1 = shrinkage, ncomp = rep(1, 4))
 })
