@@ -1,3 +1,5 @@
+#' Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)
+#'
 #' The function sgccak() is called by sgcca() and does not have to be used by the user.
 #' sgccak() enables the computation of SGCCA block components, outer weight vectors, etc.,
 #' for each block and each dimension.
@@ -20,7 +22,6 @@
 #' @return \item{AVE}{Indicators of model quality based on the Average Variance Explained (AVE): AVE(for one block), AVE(outer model), AVE(inner model).}
 #' @return \item{C}{A design matrix that describes the relationships between blocks (user specified).}
 #' @return \item{scheme}{The scheme chosen by the user (user specified).}
-#' @title Internal function for computing the SGCCA parameters (SGCCA block components, outer weight vectors etc.)
 #' @importFrom Deriv Deriv
 #' @noRd
 sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
@@ -86,9 +87,6 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
     crit_old <- sum(C * g(cov2(Y, bias = bias)))
   } else {
    crit_old <- sum(C * scheme(cov2(Y, bias = bias)))
-  }
-
-  if (mode(scheme) == "function") {
     dg <- Deriv::Deriv(scheme, env = parent.frame())
   }
 
@@ -112,14 +110,14 @@ sgccak <- function(A, C, c1 = rep(1, length(A)), scheme = "centroid",
         }
       }
 
-      Z[, q] <- rowSums(mapply("*", CbyCovq, as.data.frame(Y)))
+      Z[, q] <- Y %*% CbyCovq
       a[[q]] <- drop(crossprod(A[[q]], Z[, q, drop = FALSE]))
       a[[q]] <- soft.threshold(a[[q]], const[q])
       a[[q]] <- as.vector(a[[q]]) / norm2(a[[q]])
       Y[, q] <- drop(A[[q]] %*% a[[q]])
     }
 
-    # check for convergence of the SGCCA alogrithm to a solution of the stationnary equations
+    # check for convergence of the SGCCA algorithm to a solution of the stationary equations
 
     if (mode(scheme) != "function") {
       crit[iter] <- sum(C * g(cov2(Y, bias = bias)))
