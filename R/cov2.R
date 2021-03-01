@@ -11,25 +11,16 @@
 #' @importFrom stats cov
 
 cov2 <- function(x, y = NULL, bias = TRUE) {
-  n <- NROW(x)
 
   if (is.null(y)) {
     x <- as.matrix(x)
-    if (bias) {
-      C <- ((n - 1) / n) * cov(x, use = "pairwise.complete.obs")
-    }
-    else {
-      suppressWarnings({C <- cov(x, use = "pairwise.complete.obs")})
-    }
+    y <- x
   }
 
-  else {
-    if (bias) {
-      C <- ((n - 1) / n) * cov(x, y, use = "pairwise.complete.obs")
-    }
-    else {
-      suppressWarnings({C <- cov(x, y, use = "pairwise.complete.obs")})
-    }
+  suppressWarnings({C <- cov(x, y, use = "pairwise.complete.obs")})
+  if (bias) {
+    n <- NROW(x)
+    C <- ((n - 1) / n) * C
   }
   return(C)
 }
