@@ -8,6 +8,7 @@
 
 The goal of RGCCA is to provide Regularized Canonical Correlation Analysis.
 This fork is for better understanding RGCCA and test the results.
+It also extends some functionality so that a different design can be used on each dimension. 
 
 ## Installation
 
