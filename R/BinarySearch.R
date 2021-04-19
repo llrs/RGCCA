@@ -1,8 +1,8 @@
 #' Internal function which does not have to be used by the users
 #' @author Arnaud Gloaguen
 #' @keywords internal
-BinarySearch <-
-  function(argu, sumabs) {
+BinarySearch <- function(argu, sumabs) {
+    stopifnot(length(sumabs) == 1)
     nargu <- norm2(argu)
     if (nargu == 0 || sum(abs(argu / nargu)) <= sumabs) return(0)
     lam_max <- max(abs(argu))
