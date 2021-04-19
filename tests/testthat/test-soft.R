@@ -1,6 +1,6 @@
 set.seed(45)
-x <- rnorm(40000)
-d <- rnorm(40000)
+x <- rnorm(10)
+d <- rnorm(10)
 
 test_that("soft works", {
   out <- soft(x, d)
@@ -11,8 +11,9 @@ test_that("soft works", {
 })
 
 test_that("equivalent (but slower on big numbers)",  {
+  s <- soft(x, d)
   out <- sign(x) * ifelse(abs(x) - d > 0, abs(x) - d, 0)
-  expect_equal(out, soft(x, d))
+  expect_equal(out, s)
   out <- sign(x) * do.call(pmax, list(0, abs(x) - d))
-  expect_equal(out, soft(x, d))
+  expect_equal(out, s)
 })
