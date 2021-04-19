@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   vignette_RGCCA: vignette_RGCCA.html
-last_built: 2021-04-19T18:11Z
+last_built: 2021-04-19T22:05Z
 urls:
   reference: https://RGCCA.llrs.dev/reference
   article: https://RGCCA.llrs.dev/articles
