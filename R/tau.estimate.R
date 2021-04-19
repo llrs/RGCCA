@@ -7,6 +7,7 @@
 #' @references [1] Schaefer J. and Strimmer K., 2005. A shrinkage approach to large-scale covariance matrix estimation and implications for functional genomics. Statist. Appl. Genet. Mol. Biol. 4:32.
 #' @references [2] Jelizarow M., Guillemot V., Tenenhaus A., Strimmer K., Boulesteix A.-L., 2010. Over-optimism in bioinformatics: an illustration. Bioinformatics 26:1990-1998.
 #' @export tau.estimate
+#' @importFrom stats cor
 #' @examples
 #' n.obs <- 1e5
 #' n.vars <- 150
